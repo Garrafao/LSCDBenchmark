@@ -12,7 +12,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: dwug_en_resampled
+path: dwug_en_resampled_100
 standard_split:
   dev: []
   dev1: []
@@ -33,7 +33,6 @@ standard_split:
     - stab_nn
     - thump_nn
     - twist_nn
-    - word_nn
   test:
    - attack_nn
     - bit_nn
@@ -50,7 +49,6 @@ standard_split:
     - stab_nn
     - thump_nn
     - twist_nn
-    - word_nn
 test_on: null
 type: test
 url: https://zenodo.org/records/14025941/files/dwug_en_resampled.zip

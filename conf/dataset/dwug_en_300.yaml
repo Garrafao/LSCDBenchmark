@@ -12,7 +12,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: dwug_en_200
+path: dwug_en_300
 standard_split:
   dev: []
   dev1: []
@@ -63,7 +63,6 @@ standard_split:
     - tip_vb
     - tree_nn
     - twist_nn
-    - word_nn
   test:
     - afternoon_nn
     - attack_nn
@@ -113,4 +112,4 @@ standard_split:
     - word_nn
 test_on: null
 type: test
-url: https://zenodo.org/record/5796878/files/dwug_en.zip
+url: https://zenodo.org/records/14028531/files/dwug_en.zip

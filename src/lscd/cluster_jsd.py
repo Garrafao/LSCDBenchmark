@@ -16,3 +16,6 @@ class ClusterJSD(GradedLSCDModel):
             clusters, lemma.useid_to_grouping(), lemma.groupings
         )
         return scipy.spatial.distance.jensenshannon(c1, c2, base=2.0)  # type: ignore
+
+    def predict_all(self, lemmas: list[Lemma]) -> list[float]:
+        return [self.predict(lemma) for lemma in lemmas]

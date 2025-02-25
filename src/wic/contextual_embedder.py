@@ -312,6 +312,7 @@ class ContextualEmbedder(WICModel):
         return self._model
 
     def truncation_indices(self, target_subword_indices: list[bool]) -> tuple[int, int]:
+
         max_tokens = 512
         n_target_subtokens = target_subword_indices.count(True)
         tokens_before = int(

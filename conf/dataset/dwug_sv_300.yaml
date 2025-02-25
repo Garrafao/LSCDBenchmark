@@ -1,0 +1,112 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - _self_
+  - preprocessing: ???
+  - spelling_normalization: ???
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1"
+  - "2"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: dwug_sv_300
+standard_split:
+  dev: []
+  dev1: []
+  dev2: []
+  full:
+    - aktiv
+    - anda
+    - annandag
+    - antyda
+    - bearbeta
+    - bedömande
+    - beredning
+    - blockera
+    - bolagsstämma
+    - bröllop
+    - by
+    - bäck
+    - central
+    - dun
+    - fack
+    - framlida
+    - färg
+    - fången
+    - förhandling
+    - gagn
+    - gloria
+    - granskare
+    - ingående
+    - jordisk
+    - kemisk
+    - kokärt
+    - konduktör
+    - krita
+    - ledning
+    - medium
+    - mode
+    - motiv
+    - notis
+    - sittning
+    - studie
+    - stöt
+    - undertrycka
+    - uppfattning
+    - uppfostran
+    - uppläggning
+    - uppslag
+    - uträtta
+    - vaktmästare
+    - vegetation
+  test:
+    - aktiv
+    - anda
+    - annandag
+    - antyda
+    - bearbeta
+    - bedömande
+    - beredning
+    - blockera
+    - bolagsstämma
+    - bröllop
+    - by
+    - bäck
+    - central
+    - dun
+    - fack
+    - framlida
+    - färg
+    - fången
+    - förhandling
+    - gagn
+    - gloria
+    - granskare
+    - ingående
+    - jordisk
+    - kemisk
+    - kokärt
+    - konduktör
+    - krita
+    - ledning
+    - medium
+    - mode
+    - motiv
+    - notis
+    - sittning
+    - studie
+    - stöt
+    - undertrycka
+    - uppfattning
+    - uppfostran
+    - uppläggning
+    - uppslag
+    - uträtta
+    - vaktmästare
+    - vegetation
+test_on: null
+type: test
+url: https://zenodo.org/records/14028906/files/dwug_sv.zip

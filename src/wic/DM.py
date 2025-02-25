@@ -25,6 +25,7 @@ log = getLogger(__name__)
 
 class Model(BaseModel):
     """ """
+
     name: str
     url: str
 

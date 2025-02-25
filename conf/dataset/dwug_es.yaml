@@ -12,7 +12,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: dwug_es_300
+path: dwug_es
 standard_split:
   dev: []
   dev1: []
@@ -20,165 +20,133 @@ standard_split:
   full:
     - abundar
     - actitud
-    - adelante
     - agradecer
-    - aguantar
     - albergar
-    - arena
-    - asolar
     - ataque
-    - atrás
-    - ausencia
+    - atrás
     - avance
     - banco
     - canal
     - capital
-    - cobrar
-    - colaborar
-    - compasión
+    - compasión
     - contingente
-    - copiar
     - corona
-    - corredor
     - corriente
+    - cólera
     - creciente
-    - cólera
     - declinar
-    - demá
+    - demá
     - descendiente
-    - despacho
-    - diligencia
-    - disco
     - distribuir
     - educado
     - elocuente
     - empresa
     - encargado
-    - enterar
-    - escritor
-    - especulación
-    - fallar
+    - especulación
     - fallecimiento
     - gracioso
-    - historia
     - historiador
     - impulso
-    - indicativo
-    - instalación
+    - instalación
     - interrogatorio
     - intolerable
-    - juguete
     - maduro
     - maravilloso
     - marco
     - matiz
     - metal
-    - metro
-    - modificado
     - modo
     - mortal
     - mujer
-    - médula
-    - móvil
-    - músculo
-    - "no"
+    - no
     - nombramiento
-    - nombrar
-    - obtener
     - pelear
-    - pendiente
-    - periodista
     - pila
     - planta
-    - precursor
-    - pretender
     - prima
     - propiamente
     - propuesta
-    - próximo
     - quemar
     - recomendar
     - recordar
     - reforma
-    - retroceder
     - saludar
-    - satélite
     - servidor
     - sexo
     - socialista
     - solicitud
-    - suposición
+    - suposición
     - susceptible
     - tablero
     - tarea
     - trato
-    - tropical
-    - variedad
-    - verdaderamente
     - viernes
-    - visita
     - vuestro
   test:
+    - abundar
     - actitud
+    - agradecer
+    - albergar
     - ataque
-    - atrás
-    - ausencia
+    - atrás
     - avance
     - banco
     - canal
     - capital
-    - cobrar
-    - colaborar
-    - compasión
-    - copiar
+    - compasión
+    - contingente
+    - corona
     - corriente
-    - cólera
+    - cólera
+    - creciente
     - declinar
-    - demá
-    - diligencia
-    - disco
+    - demá
+    - descendiente
     - distribuir
     - educado
     - elocuente
+    - empresa
     - encargado
-    - enterar
-    - especulación
-    - fallar
+    - especulación
     - fallecimiento
-    - historia
+    - gracioso
     - historiador
     - impulso
-    - indicativo
-    - juguete
+    - instalación
+    - interrogatorio
+    - intolerable
     - maduro
     - maravilloso
     - marco
     - matiz
     - metal
-    - metro
-    - modificado
-    - médula
-    - nombrar
-    - pendiente
+    - modo
+    - mortal
+    - mujer
+    - no
+    - nombramiento
+    - pelear
     - pila
     - planta
     - prima
     - propiamente
-    - próximo
+    - propuesta
+    - quemar
     - recomendar
     - recordar
-    - retroceder
-    - satélite
+    - reforma
+    - saludar
+    - servidor
+    - sexo
     - socialista
     - solicitud
+    - suposición
     - susceptible
+    - tablero
     - tarea
     - trato
-    - tropical
-    - variedad
     - viernes
-    - visita
     - vuestro
 test_on: null
 type: test
-url: https://zenodo.org/records/6433398/files/dwug_es.zip
+url: https://zenodo.org/records/6433667/files/dwug_es.zip

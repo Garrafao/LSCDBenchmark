@@ -1,0 +1,76 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - _self_
+  - preprocessing: ???
+  - spelling_normalization: ???
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1"
+  - "2"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: dwug_it_300
+standard_split:
+  dev: []
+  dev1: []
+  dev2: []
+  full:
+    - affido
+    - ape
+    - bombetta
+    - brama
+    - campanello
+    - campionato
+    - cantieristica
+    - cappuccio
+    - discriminatorio
+    - egemonizzare
+    - emulare
+    - fondista
+    - impegnativa
+    - lucciola
+    - pacchetto
+    - palmare
+    - pilotato
+    - piovra
+    - polisportiva
+    - portatile
+    - processare
+    - rampante
+    - tac
+    - trasferibile
+    - ultima
+    - unico
+  test:
+    - affido
+    - ape
+    - bombetta
+    - brama
+    - campanello
+    - campionato
+    - cantieristica
+    - cappuccio
+    - discriminatorio
+    - egemonizzare
+    - emulare
+    - fondista
+    - impegnativa
+    - lucciola
+    - pacchetto
+    - palmare
+    - pilotato
+    - piovra
+    - polisportiva
+    - portatile
+    - processare
+    - rampante
+    - tac
+    - trasferibile
+    - ultima
+    - unico
+test_on: null
+type: test
+url:https://zenodo.org/records/14617447/files/dwug_it.zip

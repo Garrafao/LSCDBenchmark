@@ -19,8 +19,9 @@ config = compose(config_name="config", return_hydra_config=True, overrides=overr
                 "task": "lscd_compare",
                 "task/lscd_compare@task.model": "apd_compare_all",
                 "task/wic@task.model.wic": "deepmistake",
+
                 "task/wic/dm_ckpt@task.model.wic.ckpt": "WIC_DWUG+XLWSD",
-                "dataset": "dwug_es_300",
+                "dataset": "dwug_de_300",
                 "dataset/split": "full",
                 "dataset/spelling_normalization": "none",
                 "dataset/preprocessing": "raw",
