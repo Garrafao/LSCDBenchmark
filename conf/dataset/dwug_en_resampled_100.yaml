@@ -34,7 +34,7 @@ standard_split:
     - thump_nn
     - twist_nn
   test:
-   - attack_nn
+    - attack_nn
     - bit_nn
     - circle_vb
     - edge_nn

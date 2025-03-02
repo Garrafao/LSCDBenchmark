@@ -612,3 +612,8 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,macos,vs,jupyternotebooks
+
+
+run1.sh
+start.sh
+output.log

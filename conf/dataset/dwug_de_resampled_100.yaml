@@ -12,7 +12,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: dwug_de_resampled
+path: dwug_de_resampled_100
 standard_split:
   dev:
     - Abgesang
@@ -31,7 +31,7 @@ standard_split:
     - weitgreifend
     - überspannen
   dev1:
-   - Abgesang
+    - Abgesang
     - Frechheit
     - Kubikmeter
     - Manschette

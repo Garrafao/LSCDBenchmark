@@ -12,7 +12,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: dwug_sv_resampled
+path: dwug_sv_resampled_100
 standard_split:
   dev: []
   dev1: []
@@ -34,7 +34,7 @@ standard_split:
     - uppfattning
     - vegetation
   test:
-   - aktiv
+    - aktiv
     - antyda
     - bearbeta
     - bedömande
