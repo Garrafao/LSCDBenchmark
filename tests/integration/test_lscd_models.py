@@ -383,7 +383,7 @@ class TestLSCDModels(unittest.TestCase):
         # Run
         score = run(*instantiate(config))
         # Assert that prediction corresponds to gold
-        assert 0.0 >= score
+        assert 0.0 <= score
     # reampled data spanish
     def test_apd_change_graded_sv_aktiv_krita(self) -> None:
         # Compose hydra config
