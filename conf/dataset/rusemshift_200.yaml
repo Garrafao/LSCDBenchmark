@@ -11,7 +11,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: RuSemShift/rusemshift_1/DWUG
+path: RuSemShift/durel/rushifteval1/
 standard_split:
   dev:
     - агентство
@@ -233,4 +233,6 @@ standard_split:
   test: []
 test_on: null
 type: dev
-url: https://github.com/juliarodina/RuSemShift.git
+url: https://github.com/Garrafao/rushifteval_public.git
+commit: 4e9256050e45e51119342a90ef231266e31be5de
+path_in_repo: durel/rushifteval1

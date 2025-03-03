@@ -58,6 +58,8 @@ class Dataset(BaseModel):
     path: Path
     name: str
     url: HttpUrl | None = Field(default=None)
+    commit: str | None = Field(default=None)
+    path_in_repo: Path | None = Field(default=None)
     standard_split: StandardSplit | None = Field(default=None)
     test_on: set[str] | int | None = Field(...)
     cleaning: Cleaning | None = Field(...)
@@ -110,7 +112,14 @@ class Dataset(BaseModel):
 
     def __download_from_git(self) -> None:
         assert self.url is not None
-        Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
+        if(self.path_in_repo and self.commit is not None):
+            self.data_dir.mkdir(parents=True, exist_ok=True)
+            Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
+            repo = Repo(self.data_dir / self.relative_path.parts[0])
+            repo.git.checkout(self.commit)
+            shutil.copytree(repo.working_dir / self.path_in_repo, self.absolute_path)
+        else:
+            Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
 
     def __download_zip(self) -> None:
         assert self.url is not None
