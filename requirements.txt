@@ -15,7 +15,8 @@ click==8.1.7
 contourpy==1.2.1
 cycler==0.12.1
 decorator==5.1.1
--e git+https://github.com/arshandalili/deepmistake.git@8027c5a696ee35f71d5686f8c2b71330844b6df4#egg=deepmistake
+git+https://github.com/nvanva/deepmistake@v3.0.0-alpha
+gdown==5.2.0
 defusedxml==0.7.1
 dill==0.3.8
 docopt==0.6.2
