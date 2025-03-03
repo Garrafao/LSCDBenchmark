@@ -73,4 +73,4 @@ standard_split:
     - unico
 test_on: null
 type: test
-url:https://zenodo.org/records/14617447/files/dwug_it.zip
+url: https://zenodo.org/record//14617447/files/dwug_it.zip

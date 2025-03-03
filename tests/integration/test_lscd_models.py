@@ -29,7 +29,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_all",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
@@ -57,7 +57,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_sampled",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
@@ -85,7 +85,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_all",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
@@ -146,7 +146,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_all",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
@@ -154,7 +154,7 @@ class TestLSCDModels(unittest.TestCase):
                     # "+dataset/name": "dwug_de_210", # is done as default in runner.instantiate()
                     "dataset": "dwug_de_210",
                     "dataset/split": "dev",
-                    "dataset/spelling_normalization": "german",
+                    "dataset/spelling_normalization": "none",
                     "dataset/preprocessing": "normalization",
                     # These 2 words have extreme change_graded values in the gold data: 0.0 and 0.93
                     "dataset.test_on": ["Ackergerät", "Engpaß"],
@@ -185,7 +185,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "diasense_all",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
@@ -364,7 +364,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_all",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
@@ -393,7 +393,7 @@ class TestLSCDModels(unittest.TestCase):
             overrides=overrides(
                 {
                     "task": "lscd_graded",
-                    "task.model.wic.ckpt": "bert-base-german-cased",
+                    "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_all",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
