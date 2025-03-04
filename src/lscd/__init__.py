@@ -1,4 +1,4 @@
-from .apd import APD
+from .apd import APD, DiaSense
 from .cluster_jsd import ClusterJSD
 from .cos import Cos
 from .model import BinaryThresholdModel, GradedLSCDModel
@@ -6,6 +6,7 @@ from .permutation import Permutation
 
 __all__ = [
     "APD",
+    "DiaSense",
     "ClusterJSD",
     "Cos",
     "GradedLSCDModel",
