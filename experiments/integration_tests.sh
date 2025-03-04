@@ -11,6 +11,7 @@
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_compare_es_simple_recordar
 
 # test with resampled data
-python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_eng_attack_edge
-python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_sv_aktiv_krita
-python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_de_Abgesang_Frechheit
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_eng_attack_edge
+python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_eng_graft_ounce
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_sv_aktiv_krita
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_de_Abgesang_Frechheit
