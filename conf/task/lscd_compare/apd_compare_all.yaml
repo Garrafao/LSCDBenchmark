@@ -4,5 +4,5 @@ defaults:
 
 _target_: src.lscd.APD
 use_pairs:
-  group: COMPARE
-  sample: all
+  group: EARLIER
+  sample: annotated

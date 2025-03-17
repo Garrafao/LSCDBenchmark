@@ -617,3 +617,5 @@ MigrationBackup/
 run1.sh
 start.sh
 output.log
+test.ipynb
+test_wic_models.py

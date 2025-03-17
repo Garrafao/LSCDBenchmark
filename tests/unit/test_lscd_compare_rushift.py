@@ -22,11 +22,11 @@ config = compose(config_name="config", return_hydra_config=True, overrides=overr
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
                     "+task.model.layers":[12],
-                    "dataset": "rusemshift_200",
-                    "dataset/split": "test",
+                    "dataset": "rushifteval2_200",
+                    "dataset/split": "full",
                     "dataset/spelling_normalization": "none",
                     "dataset/preprocessing": "raw",
-                    "evaluation": "change_graded",
+                    "evaluation": "compare",
                     "evaluation/plotter": "none",
                 }
         ))

@@ -18,7 +18,7 @@ class APD(GradedLSCDModel):
         :type lemma: Lemma
         :return: mean of pairwise distances
         :rtype: float
-        """              
+        """         
         use_pairs = lemma.use_pairs(
             group=self.use_pair_options.group, 
             sample=self.use_pair_options.sample

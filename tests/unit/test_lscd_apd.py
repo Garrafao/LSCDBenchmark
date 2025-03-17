@@ -22,7 +22,7 @@ class TestAPD(unittest.TestCase):
                             subword_aggregation="average",
                             encode_only=False
                             )
-    UPO = UsePairOptions(group="COMPARE", sample='all')
+    UPO = UsePairOptions(group="EARLIER", sample='all')
     APD = APD(wic=WIC, use_pairs=UPO)
 
     # test with testwug_en_111, check if dataset exist

@@ -4,6 +4,7 @@ import pickle
 import json
 import os
 import shutil
+import tempfile
 import uuid
 import zipfile
 import yaml
@@ -110,16 +111,39 @@ class Dataset(BaseModel):
             root = "wug"
         return utils.path(root)
 
+    # def __download_from_git(self) -> None:
+    #     assert self.url is not None
+    #     if(self.path_in_repo and self.commit is not None):
+    #         self.data_dir.mkdir(parents=True, exist_ok=True)
+    #         Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
+    #         repo = Repo(self.data_dir / self.relative_path.parts[0])
+    #         repo.git.checkout(self.commit)
+    #         shutil.copytree(repo.working_dir / self.path_in_repo, self.absolute_path)
+    #     else:
+    #         Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
     def __download_from_git(self) -> None:
-        assert self.url is not None
-        if(self.path_in_repo and self.commit is not None):
-            self.data_dir.mkdir(parents=True, exist_ok=True)
-            Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
-            repo = Repo(self.data_dir / self.relative_path.parts[0])
-            repo.git.checkout(self.commit)
-            shutil.copytree(repo.working_dir / self.path_in_repo, self.absolute_path)
-        else:
-            Repo.clone_from(url=self.url, to_path=self.data_dir / self.relative_path.parts[0])
+        assert self.url is not None, "URL must be provided."
+        
+        self.data_dir.mkdir(parents=True, exist_ok=True)
+        
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_dir_path = Path(tmp_dir)
+            
+            repo_dir = tmp_dir_path / "repo"
+            Repo.clone_from(url=self.url, to_path=repo_dir)
+            
+            if self.commit:
+                repo = Repo(repo_dir)
+                repo.git.checkout(self.commit)
+            
+            if self.path_in_repo:
+                source_path = repo_dir / self.path_in_repo
+                if source_path.exists():
+                    shutil.copytree(source_path, self.absolute_path, dirs_exist_ok=True)
+                else:
+                    raise FileNotFoundError(f"Path {source_path} does not exist in the repository.")
+            else:
+                shutil.copytree(repo_dir, self.absolute_path, dirs_exist_ok=True)
 
     def __download_zip(self) -> None:
         assert self.url is not None
@@ -450,22 +474,50 @@ class Dataset(BaseModel):
             case "dev":
                 return self.standard_split.dev
 
+    # def filter_lemmas(self, lemmas: list[Lemma]) -> list[Lemma]:
+    #     if utils.is_str_set(self.test_on):
+    #         keep = self.test_on
+    #     elif utils.is_int(self.test_on):
+    #         keep = set([lemma.name for lemma in lemmas[: self.test_on]])
+    #     else:
+    #         # keep all lemma names
+    #         # keep = set([lemma.name for lemma in self.lemmas])
+    #         keep = set(self.get_split())
+    #         if self.cleaning is not None and len(self.cleaning.stats) > 0:
+    #             # remove "data=full" row
+    #             agreements = self.stats_agreement_df.iloc[1:, :].copy()
+    #             agreements = self.cleaning(agreements)
+    #             keep = keep.intersection(agreements.data.unique().tolist())
+
+    #     return [lemma for lemma in lemmas if lemma.name in keep]
+
     def filter_lemmas(self, lemmas: list[Lemma]) -> list[Lemma]:
+        print(f"Number of input lemmas: {len(lemmas)}")
+        if not lemmas:
+            print("Warning: Input lemmas list is empty.")
+
         if utils.is_str_set(self.test_on):
             keep = self.test_on
         elif utils.is_int(self.test_on):
             keep = set([lemma.name for lemma in lemmas[: self.test_on]])
         else:
-            # keep all lemma names
-            # keep = set([lemma.name for lemma in self.lemmas])
-            keep = set(self.get_split())
+            # Debug: Check self.get_split()
+            split_lemmas = self.get_split()
+            keep = set(split_lemmas)
+
+            # Debug: Check self.cleaning
             if self.cleaning is not None and len(self.cleaning.stats) > 0:
-                # remove "data=full" row
                 agreements = self.stats_agreement_df.iloc[1:, :].copy()
                 agreements = self.cleaning(agreements)
                 keep = keep.intersection(agreements.data.unique().tolist())
 
-        return [lemma for lemma in lemmas if lemma.name in keep]
+        # Debug: Check the lemma names in the input lemmas list
+        lemma_names = [lemma.name for lemma in lemmas]
+   
+
+        # Filter lemmas based on the keep set
+        filtered_lemmas = [lemma for lemma in lemmas if lemma.name in keep]
+        return filtered_lemmas
 
     @property
     def lemmas(self) -> list[Lemma]:
