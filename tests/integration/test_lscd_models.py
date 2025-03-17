@@ -384,7 +384,38 @@ class TestLSCDModels(unittest.TestCase):
         score = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert 0.0 <= score
-    # reampled data spanish
+        
+    def test_apd_change_graded_eng_graft_ounce(self) -> None:
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine",
+                    "dataset": "dwug_en_resampled_100",
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    # These 2 words have extreme change_graded values in the gold data: 0.0 and 0.55
+                    "dataset.test_on": ["ounce_nn", "twist_nn"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score = run(*instantiate(config))
+        print(score)
+        # Assert that prediction corresponds to gold
+        assert 0.0 >= score
+        
+    # reampled data Swedish
     def test_apd_change_graded_sv_aktiv_krita(self) -> None:
         # Compose hydra config
         config = compose(
