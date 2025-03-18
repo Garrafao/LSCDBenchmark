@@ -96,6 +96,7 @@ class Lemma(BaseModel):
                 ],
                 axis=1,
             )
+            self._uses_df['identifier'] = self._uses_df['identifier'].astype(str)
             self._uses_df = self.uses_schema.validate(self._uses_df)
         return self._uses_df
 
@@ -122,6 +123,8 @@ class Lemma(BaseModel):
         if self._annotated_pairs_df is None:
             path = self.path / "judgments.csv"
             self._annotated_pairs_df = pd.read_csv(path, delimiter="\t", encoding="utf8", quoting=csv.QUOTE_NONE, usecols=["identifier1", "identifier2"])
+            self._annotated_pairs_df['identifier1'] = self._annotated_pairs_df['identifier1'].astype(str)
+            self._annotated_pairs_df['identifier2'] = self._annotated_pairs_df['identifier2'].astype(str)
             self._annotated_pairs_df = self.annotated_pairs_schema.validate(self._annotated_pairs_df)
         return self._annotated_pairs_df
 
