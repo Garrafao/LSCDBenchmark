@@ -12,7 +12,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: dwug_es_400
+path: dwug_es_402
 standard_split:
   dev: []
   dev1: []

@@ -1,0 +1,174 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - _self_
+  - preprocessing: ???
+  - spelling_normalization: ???
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1"
+  - "2"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: discowug_200
+standard_split:
+  dev: []
+  dev1: []
+  dev2: []
+  full:
+    - Angesicht  
+    - Angriffswaffe  
+    - Arbeitsbedingung  
+    - Aufkommen  
+    - Aufrichtung  
+    - Ausrufung  
+    - Aussterben  
+    - Ächtung  
+    - Bemerken  
+    - Berücksichtigung  
+    - Fischerei  
+    - Formgebung  
+    - Handhabe  
+    - Hauptfrage  
+    - Kompanie  
+    - Kölner  
+    - Königreich  
+    - Kriegskunst  
+    - Kunde  
+    - Lager  
+    - Lebenslage  
+    - Losung  
+    - Mauer  
+    - Querschnitt  
+    - Rang  
+    - Rädelsführer  
+    - Sprachrohr  
+    - Täter  
+    - Tote  
+    - Triebkraft  
+    - Überflutung  
+    - Vernehmen  
+    - Vernichtungskrieg  
+    - Vorbereitung  
+    - Waffenruhe  
+    - Walzwerk  
+    - Warschauer  
+    - Westen  
+    - Zehner  
+    - Zurückgebleibene  
+    - Zuwachs  
+    - abspalten  
+    - angeregt  
+    - anpflanzen  
+    - aufstrebend  
+    - ausbilden  
+    - durchdenken  
+    - einbinden  
+    - einmünden  
+    - eintreten  
+    - erlauben  
+    - erringen  
+    - finnisch  
+    - freigelaßen  
+    - freistehend  
+    - geehrt  
+    - gelagert  
+    - gewahren  
+    - greifend  
+    - helfen  
+    - hinrichten  
+    - hochwichtig  
+    - nebensächlich  
+    - neunjährig  
+    - niederschlagen  
+    - nochmalig  
+    - preisgeben  
+    - regelrecht  
+    - regulär  
+    - unbedenklich  
+    - ungebrechen  
+    - überwintern  
+    - vorjährig  
+    - wuchernd  
+    - zurückwerfen  
+  test:
+    - Angesicht  
+    - Angriffswaffe  
+    - Arbeitsbedingung  
+    - Aufkommen  
+    - Aufrichtung  
+    - Ausrufung  
+    - Aussterben  
+    - Ächtung  
+    - Bemerken  
+    - Berücksichtigung  
+    - Fischerei  
+    - Formgebung  
+    - Handhabe  
+    - Hauptfrage  
+    - Kompanie  
+    - Kölner  
+    - Königreich  
+    - Kriegskunst  
+    - Kunde  
+    - Lager  
+    - Lebenslage  
+    - Losung  
+    - Mauer  
+    - Querschnitt  
+    - Rang  
+    - Rädelsführer  
+    - Sprachrohr  
+    - Täter  
+    - Tote  
+    - Triebkraft  
+    - Überflutung  
+    - Vernehmen  
+    - Vernichtungskrieg  
+    - Vorbereitung  
+    - Waffenruhe  
+    - Walzwerk  
+    - Warschauer  
+    - Westen  
+    - Zehner  
+    - Zurückgebleibene  
+    - Zuwachs  
+    - abspalten  
+    - angeregt  
+    - anpflanzen  
+    - aufstrebend  
+    - ausbilden  
+    - durchdenken  
+    - einbinden  
+    - einmünden  
+    - eintreten  
+    - erlauben  
+    - erringen  
+    - finnisch  
+    - freigelaßen  
+    - freistehend  
+    - geehrt  
+    - gelagert  
+    - gewahren  
+    - greifend  
+    - helfen  
+    - hinrichten  
+    - hochwichtig  
+    - nebensächlich  
+    - neunjährig  
+    - niederschlagen  
+    - nochmalig  
+    - preisgeben  
+    - regelrecht  
+    - regulär  
+    - unbedenklich  
+    - ungebrechen  
+    - überwintern  
+    - vorjährig  
+    - wuchernd  
+    - zurückwerfen  
+test_on: null
+type: test
+url: https://zenodo.org/records/14028592/files/discowug.zip

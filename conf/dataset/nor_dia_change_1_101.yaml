@@ -1,0 +1,146 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - preprocessing: ???
+  - spelling_normalization: none
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1929-1965"
+  - "1970-2015"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: nor_dia_change_1_101
+standard_split:
+  dev:
+    - anfektelse  
+    - bit  
+    - bølge  
+    - damp  
+    - data  
+    - egg  
+    - etterforskning  
+    - fag  
+    - fil  
+    - forhold  
+    - formiddagen  
+    - frakk  
+    - gress  
+    - horisont  
+    - husrom  
+    - idiot  
+    - kart  
+    - katt  
+    - kjemi  
+    - kloakk  
+    - landet  
+    - leder  
+    - leilighet  
+    - linse  
+    - lyng  
+    - mening  
+    - mål  
+    - operasjon  
+    - plattform  
+    - pære  
+    - rad  
+    - rev  
+    - ris  
+    - sete  
+    - skjerm  
+    - stoff  
+    - tro  
+    - tropp  
+    - varsel  
+    - ørret   
+  dev1:
+    - anfektelse  
+    - bit  
+    - bølge  
+    - damp  
+    - data  
+    - egg  
+    - etterforskning  
+    - fag  
+    - fil  
+    - forhold  
+    - formiddagen  
+    - frakk  
+    - gress  
+    - horisont  
+    - husrom  
+    - idiot  
+    - kart  
+    - katt  
+    - kjemi  
+    - kloakk  
+    - landet  
+    - leder  
+    - leilighet  
+    - linse  
+    - lyng  
+    - mening  
+    - mål  
+    - operasjon  
+    - plattform  
+    - pære  
+    - rad  
+    - rev  
+    - ris  
+    - sete  
+    - skjerm  
+    - stoff  
+    - tro  
+    - tropp  
+    - varsel  
+    - ørret  
+  dev2: []
+    
+  full:
+    - anfektelse  
+    - bit  
+    - bølge  
+    - damp  
+    - data  
+    - egg  
+    - etterforskning  
+    - fag  
+    - fil  
+    - forhold  
+    - formiddagen  
+    - frakk  
+    - gress  
+    - horisont  
+    - husrom  
+    - idiot  
+    - kart  
+    - katt  
+    - kjemi  
+    - kloakk  
+    - landet  
+    - leder  
+    - leilighet  
+    - linse  
+    - lyng  
+    - mening  
+    - mål  
+    - operasjon  
+    - plattform  
+    - pære  
+    - rad  
+    - rev  
+    - ris  
+    - sete  
+    - skjerm  
+    - stoff  
+    - tro  
+    - tropp  
+    - varsel  
+    - ørret  
+  test: []
+test_on: null
+type: dev
+url: https://github.com/Garrafao/nor_dia_change.git
+commit: f9b374083f490898faf33cd5a5adfdc8616b3089
+path_in_repo: subset1

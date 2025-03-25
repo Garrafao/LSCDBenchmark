@@ -1,0 +1,105 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - preprocessing: ???
+  - spelling_normalization: none
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1980-1990"
+  - "2012-2019"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: nor_dia_change_2_101
+standard_split:
+  dev:
+    - Syden  
+    - bank  
+    - bystyrerepresentant  
+    - driftsregnskap  
+    - fane  
+    - fjær  
+    - innstilling  
+    - kanal  
+    - kjøpepress  
+    - kode  
+    - kohort  
+    - kreft  
+    - mappe  
+    - melding  
+    - melk  
+    - moment  
+    - mus  
+    - nett  
+    - oppvarming  
+    - overflate  
+    - papir  
+    - rådgiver  
+    - side  
+    - sky  
+    - spill  
+    - storby  
+    - stryk  
+    - strøm  
+    - særforbund  
+    - tape  
+    - tavle  
+    - tendens  
+    - terror  
+    - test  
+    - tjener  
+    - utakt  
+    - vert  
+    - vindu  
+    - virkelighet  
+    - virus  
+  dev1: []
+  dev2: []
+  full:
+    - Syden  
+    - bank  
+    - bystyrerepresentant  
+    - driftsregnskap  
+    - fane  
+    - fjær  
+    - innstilling  
+    - kanal  
+    - kjøpepress  
+    - kode  
+    - kohort  
+    - kreft  
+    - mappe  
+    - melding  
+    - melk  
+    - moment  
+    - mus  
+    - nett  
+    - oppvarming  
+    - overflate  
+    - papir  
+    - rådgiver  
+    - side  
+    - sky  
+    - spill  
+    - storby  
+    - stryk  
+    - strøm  
+    - særforbund  
+    - tape  
+    - tavle  
+    - tendens  
+    - terror  
+    - test  
+    - tjener  
+    - utakt  
+    - vert  
+    - vindu  
+    - virkelighet  
+    - virus  
+  test: []
+test_on: null
+type: dev
+url: https://github.com/Garrafao/nor_dia_change.git
+commit: f9b374083f490898faf33cd5a5adfdc8616b3089
+path_in_repo: subset2

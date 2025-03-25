@@ -11,7 +11,7 @@ groupings:
 wic_use_pairs:
   group: ALL
   sample: annotated
-path: RuSemShift/durel/rushifteval2
+path: rushifteval2_200
 standard_split:
   dev:
     - авторитет  
