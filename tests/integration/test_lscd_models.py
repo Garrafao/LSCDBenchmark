@@ -446,6 +446,67 @@ class TestLSCDModels(unittest.TestCase):
         assert 1.0 >= score
 
 
+    def test_apd_downsampled_change_graded_eng_simple_plane_afternoon(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "apd_compare_all_downsampled",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine",
+                    "dataset": "testwug_en_111",  # todo: this should become testwug_en_1.1.1
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "lemmatization",
+                    # These 2 words have extreme change_graded values in the gold data: 0.0 and 0.94
+                    "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        assert pytest.approx(1.0) == score
+
+
+    def test_jsddot_downsampled_change_graded_eng_simple_plane_afternoon(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "jsddot_all_downsampled",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine",
+                    "dataset": "testwug_en_111",  # todo: this should become testwug_en_1.1.1
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "lemmatization",
+                    # These 2 words have extreme change_graded values in the gold data: 0.0 and 0.94
+                    "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        assert pytest.approx(1.0) == score
+
 
 if __name__ == "__main__":
 

@@ -1,0 +1,8 @@
+defaults:
+  - _self_
+  - /task/wic@wic: ???
+
+_target_: src.lscd.APD
+use_pairs:
+  group: COMPARE
+  sample: all_downsampled

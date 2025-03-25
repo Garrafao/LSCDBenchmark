@@ -32,7 +32,7 @@ class RandomSampling(BaseModel):
     replace: bool
 
 Group = Literal["COMPARE", "EARLIER", "LATER", "ALL"]
-Sample = Literal["all", "annotated", "predefined"] | RandomSampling
+Sample = Literal["all", "annotated", "predefined", "all_downsampled"] | RandomSampling
 
 class UsePairOptions(BaseModel):
     group: Group
@@ -244,11 +244,20 @@ class Lemma(BaseModel):
             case ("all", p):
                 ids1, ids2 = self.split_uses(p)
                 use_pairs = list(product(ids1, ids2))
+            case ("all_downsampled", p): # this first downsamples uses randomly to equal number
+                ids1, ids2 = self.split_uses(p)
+                if len(ids1)>len(ids2):
+                    ids1 = np.random.choice(ids1, replace=False, size=len(ids2)).tolist()
+                elif len(ids1)<len(ids2):
+                    ids2 = np.random.choice(ids2, replace=False, size=len(ids1)).tolist()
+                else:
+                    pass
+                use_pairs = list(product(ids1, ids2))
             case (sampled, p):
                 assert isinstance(sampled, RandomSampling)
                 ids1, ids2 = self.split_uses(p)
-                ids1 = [np.random.choice(ids1, replace=sampled.replace) for _ in range(sampled.n)]
-                ids2 = [np.random.choice(ids2, replace=sampled.replace) for _ in range(sampled.n)]
+                ids1 = [np.random.choice(ids1, replace=sampled.replace) for _ in range(sampled.n)] # there is a potential bug here
+                ids2 = [np.random.choice(ids2, replace=sampled.replace) for _ in range(sampled.n)] # there is a potential bug here
                 use_pairs = list(zip(ids1, ids2))
 
         use_pairs_instances = []
