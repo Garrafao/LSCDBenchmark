@@ -1,0 +1,8 @@
+defaults:
+  - _self_
+  - /task/wic@wic: ???
+
+_target_: src.lscd.JSDDOT
+use_pairs:
+  group: ALL
+  sample: all
