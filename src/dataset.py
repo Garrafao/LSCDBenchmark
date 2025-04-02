@@ -34,6 +34,7 @@ from src.cleaning import Cleaning
 from src.evaluation import EvaluationTask
 from src.preprocessing import ContextPreprocessor, Raw
 from src.lemma import Group, Lemma, Sample, UsePairOptions
+import uuid
 
 
 class StandardSplit(BaseModel):
@@ -181,6 +182,9 @@ class Dataset(BaseModel):
             self.__download_from_git()
         else:
             self.__download_zip()
+        
+        self._patch_identifiers()
+
 
     def __unzip(self, zip_file: Path) -> None:
         trans_table = {"ó": "ó", "á": "á", "é": "é", "ú": "ú"}
@@ -420,6 +424,7 @@ class Dataset(BaseModel):
                 tables.append(judgments)
             self._judgments = pd.concat(tables)
         return self._judgments
+    
 
     @property
     def judgments_schema(self) -> DataFrameSchema:
@@ -549,3 +554,30 @@ class Dataset(BaseModel):
             ]
 
         return self._lemmas
+    
+    def _patch_identifiers(self):
+        """Add lemma name to identifiers in uses.csv and judgments.csv after download."""
+        data_path = self.absolute_path / "data"
+        for lemma_dir in data_path.iterdir():
+            if not lemma_dir.is_dir():
+                continue
+
+            lemma = lemma_dir.name
+            uses_path = lemma_dir / "uses.csv"
+            judgments_path = lemma_dir / "judgments.csv"
+
+            if uses_path.exists():
+                uses_df = pd.read_csv(uses_path, delimiter="\t")
+                uses_df["identifier"] = f"{lemma}::" + uses_df["identifier"].astype(str)
+                uses_df["lemma"] = lemma
+                uses_df.to_csv(uses_path, sep="\t", index=False)
+
+            if judgments_path.exists():
+                judgments_df = pd.read_csv(judgments_path, delimiter="\t")
+                judgments_df["identifier1"] = f"{lemma}::" + judgments_df["identifier1"].astype(str)
+                judgments_df["identifier2"] = f"{lemma}::" + judgments_df["identifier2"].astype(str)
+                judgments_df["lemma"] = lemma
+                judgments_df.to_csv(judgments_path, sep="\t", index=False)
+
+        print(f"✅ Patched identifiers for dataset: {self.name}")
+

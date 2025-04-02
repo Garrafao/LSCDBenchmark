@@ -628,3 +628,5 @@ chanage_graded_lscd_graded.sh
 eval_compare_lsc_graded.sh
 change_graded_lscd_garded.sh
 wic1.csv
+lscd_graded.sh
+run.sh
