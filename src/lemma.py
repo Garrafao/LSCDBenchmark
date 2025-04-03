@@ -225,10 +225,9 @@ class Lemma(BaseModel):
                 earlier_0, earlier_1 = self._split_earlier_uses()
                 later_0, later_1 = self._split_later_uses()
                 return (
-                    compare_0 + earlier_0 + later_0,
+                    compare_0 + earlier_0 + later_0, # this makes only limited sense, see below
                     compare_1 + earlier_1 + later_1
-                )
-                
+                )                
 
     def get_uses(self) -> list[Use]:
         return [Use.from_series(row) for _, row in self.uses_df.iterrows()]
@@ -243,16 +242,19 @@ class Lemma(BaseModel):
                 use_pairs = list(zip(ids1, ids2))
             case ("all", p):
                 ids1, ids2 = self.split_uses(p)
-                use_pairs = list(product(ids1, ids2))
+                use_pairs = list(product(ids1, ids2)) # in combination with split_uses this can lead to duplicate pairs, assert here that there are no duplicate pairs
             case ("all_downsampled", p): # this first downsamples uses randomly to equal number
-                ids1, ids2 = self.split_uses(p)
+                ids1 = self.uses_df[self.uses_df.grouping == self.groupings[0]]
+                ids2 = self.uses_df[self.uses_df.grouping == self.groupings[1]]
                 if len(ids1)>len(ids2):
-                    ids1 = np.random.choice(ids1, replace=False, size=len(ids2)).tolist()
+                    ids1 = ids1.sample(n=len(ids2), replace=False)
                 elif len(ids1)<len(ids2):
-                    ids2 = np.random.choice(ids2, replace=False, size=len(ids1)).tolist()
+                    ids2 = ids2.sample(n=len(ids1), replace=False)
                 else:
                     pass
-                use_pairs = list(product(ids1, ids2))
+                self._uses_df = pd.concat([ids1,ids2],ignore_index=True)
+                ids1, ids2 = self.split_uses(p)
+                use_pairs = list(product(ids1, ids2)) # in combination with split_uses this can lead to duplicate pairs, assert here that there are no duplicate pairs
             case (sampled, p):
                 assert isinstance(sampled, RandomSampling)
                 ids1, ids2 = self.split_uses(p)
@@ -261,7 +263,7 @@ class Lemma(BaseModel):
                 use_pairs = list(zip(ids1, ids2))
 
         use_pairs_instances = []
-        for id1, id2 in use_pairs:
+        for id1, id2 in use_pairs: # could be done more efficiently
             u1 = Use.from_series(self.uses_df[self.uses_df.identifier == id1].iloc[0])
             u2 = Use.from_series(self.uses_df[self.uses_df.identifier == id2].iloc[0])
             use_pairs_instances.append((u1, u2))
