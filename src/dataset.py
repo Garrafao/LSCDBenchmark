@@ -183,7 +183,10 @@ class Dataset(BaseModel):
         else:
             self.__download_zip()
         
-        #self._patch_identifiers()
+        if self._check_duplicate_identifiers():
+            self._patch_identifiers()
+        else:
+            print(f"No duplicates found; identifiers not patched for dataset: {self.name}")
 
 
     def __unzip(self, zip_file: Path) -> None:
@@ -579,5 +582,34 @@ class Dataset(BaseModel):
                 judgments_df["lemma"] = lemma
                 judgments_df.to_csv(judgments_path, sep="\t", index=False)
 
-        print(f"✅ Patched identifiers for dataset: {self.name}")
+        print(f"Patched identifiers for dataset: {self.name}")
 
+    def _check_duplicate_identifiers(self) -> bool:
+        data_path = self.absolute_path / "data"
+        pairs_dict = {}
+
+        for lemma_dir in data_path.iterdir():
+            if lemma_dir.is_dir():
+                lemma = lemma_dir.name
+                judgments_path = lemma_dir / "judgments.csv"
+                
+                if judgments_path.exists():
+                    df = pd.read_csv(judgments_path, delimiter="\t", dtype=str)
+
+                    for _, row in df.iterrows():
+                        pair = (row["identifier1"], row["identifier2"])
+                        pairs_dict.setdefault(pair, set()).add(lemma)
+
+        duplicates = [
+            (pair, lemmas) for pair, lemmas in pairs_dict.items() if len(lemmas) > 1
+        ]
+
+        if duplicates:
+            print(f"Duplicate identifier pairs found across lemmas in dataset '{self.name}':")
+            for (identifier1, identifier2), lemmas in duplicates:
+                lemmas_list = ', '.join(lemmas)
+                print(f"  - Pair ({identifier1}, {identifier2}) appears in lemmas: {lemmas_list}")
+            return True  # Duplicates found
+        else:
+            print(f"No duplicate identifier pairs found across lemmas in dataset '{self.name}'.")
+            return False  # No duplicates found
