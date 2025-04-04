@@ -267,7 +267,6 @@ class ContextualEmbedder(WICModel):
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
         self.layers = list(self.layers)
-
     def __enter__(self):
         pass
 
@@ -476,3 +475,5 @@ class ContextualEmbedder(WICModel):
             return embedding.cpu().numpy()
         else:
             return embedding  # type: ignore
+        
+   

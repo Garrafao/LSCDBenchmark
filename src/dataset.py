@@ -183,7 +183,7 @@ class Dataset(BaseModel):
         else:
             self.__download_zip()
         
-        self._patch_identifiers()
+        #self._patch_identifiers()
 
 
     def __unzip(self, zip_file: Path) -> None:
