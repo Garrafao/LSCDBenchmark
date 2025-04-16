@@ -342,7 +342,6 @@ class ContextualEmbedder(WICModel):
                 enc_1 = self.encode(use_pair[0], d_type=np.ndarray)
                 enc_2 = self.encode(use_pair[1], d_type=np.ndarray)
                 predictions.append(self.similarity_metric(enc_1, enc_2))
-
         return predictions
 
     def tokenize(self, use: Use) -> BatchEncoding:
@@ -464,8 +463,8 @@ class ContextualEmbedder(WICModel):
                 log.info(f"Size of pre-subword-agregated tensor: {embedding.shape}")
 
             self._embeddings[use] = embedding
-            if self.embedding_cache is not None:
-                self.embedding_cache.add_use(use=use, embedding=embedding)
+            #if self.embedding_cache is not None:
+            #    self.embedding_cache.add_use(use=use, embedding=embedding)
         if len(embedding.shape) == 3:
             embedding = self.aggregate(embedding, layers=self.layers)
         if self.normalization is not None:

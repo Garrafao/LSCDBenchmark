@@ -1,6 +1,6 @@
 import csv
 from collections import defaultdict
-from itertools import product
+from itertools import product, combinations
 from pathlib import Path
 from typing import (
     Dict,
@@ -195,15 +195,18 @@ class Lemma(BaseModel):
     def _split_compare_uses(self) -> tuple[list[UseID], list[UseID]]:
         ids1 = self.uses_df[self.uses_df.grouping == self.groupings[0]]
         ids2 = self.uses_df[self.uses_df.grouping == self.groupings[1]]
-        return ids1.identifier.tolist(), ids2.identifier.tolist()
+        ids1, ids2 = zip(*[(id1,id2) for id1, id2 in product(ids1.identifier.tolist(), ids2.identifier.tolist())])
+        return list(ids1), list(ids2)
 
     def _split_earlier_uses(self) -> tuple[list[UseID], list[UseID]]:
         ids = self.uses_df[self.uses_df.grouping == self.groupings[0]]
-        return ids.identifier.tolist(), ids.identifier.tolist()
+        ids1, ids2 = zip(*[(id1,id2) for id1, id2 in combinations(ids.identifier.tolist(), 2)])
+        return list(ids1), list(ids2)
 
     def _split_later_uses(self) -> tuple[list[UseID], list[UseID]]:
         ids = self.uses_df[self.uses_df.grouping == self.groupings[1]]
-        return ids.identifier.tolist(), ids.identifier.tolist()
+        ids1, ids2 = zip(*[(id1,id2) for id1, id2 in combinations(ids.identifier.tolist(), 2)])
+        return list(ids1), list(ids2)
 
     def split_uses(self, group: Group) -> tuple[list[UseID], list[UseID]]:
         """Splits the uses of a lemma into two separate lists of use identifiers, according to `pairing`
@@ -225,7 +228,7 @@ class Lemma(BaseModel):
                 earlier_0, earlier_1 = self._split_earlier_uses()
                 later_0, later_1 = self._split_later_uses()
                 return (
-                    compare_0 + earlier_0 + later_0, # this makes only limited sense, see below
+                    compare_0 + earlier_0 + later_0,
                     compare_1 + earlier_1 + later_1
                 )                
 
@@ -242,7 +245,7 @@ class Lemma(BaseModel):
                 use_pairs = list(zip(ids1, ids2))
             case ("all", p):
                 ids1, ids2 = self.split_uses(p)
-                use_pairs = list(product(ids1, ids2)) # in combination with split_uses this can lead to duplicate pairs, assert here that there are no duplicate pairs
+                use_pairs = list(zip(ids1, ids2)) # after changing use pair construction logic, splitting may be superfluous
             case ("all_downsampled", p): # this first downsamples uses randomly to equal number
                 ids1 = self.uses_df[self.uses_df.grouping == self.groupings[0]]
                 ids2 = self.uses_df[self.uses_df.grouping == self.groupings[1]]
@@ -254,19 +257,17 @@ class Lemma(BaseModel):
                     pass
                 self._uses_df = pd.concat([ids1,ids2],ignore_index=True)
                 ids1, ids2 = self.split_uses(p)
-                use_pairs = list(product(ids1, ids2)) # in combination with split_uses this can lead to duplicate pairs, assert here that there are no duplicate pairs
+                use_pairs = list(zip(ids1, ids2)) # after changing use pair construction logic, splitting may be superfluous
             case (sampled, p):
                 assert isinstance(sampled, RandomSampling)
+                ids = ids.sample(n=sampled.n, replace=sampled.replace) # validate
+                self._uses_df = ids
                 ids1, ids2 = self.split_uses(p)
-                ids1 = [np.random.choice(ids1, replace=sampled.replace) for _ in range(sampled.n)] # there is a potential bug here
-                ids2 = [np.random.choice(ids2, replace=sampled.replace) for _ in range(sampled.n)] # there is a potential bug here
                 use_pairs = list(zip(ids1, ids2))
 
-        use_pairs_instances = []
-        for id1, id2 in use_pairs: # could be done more efficiently
-            u1 = Use.from_series(self.uses_df[self.uses_df.identifier == id1].iloc[0])
-            u2 = Use.from_series(self.uses_df[self.uses_df.identifier == id2].iloc[0])
-            use_pairs_instances.append((u1, u2))
+        assert len(use_pairs) == len(set(use_pairs)) # we could additionally assert that switched pairs don't exist   
+
+        use_pairs_instances = [(Use.from_series(self.uses_df[self.uses_df.identifier == id1].iloc[0]), Use.from_series(self.uses_df[self.uses_df.identifier == id2].iloc[0])) for id1, id2 in use_pairs]
 
         return use_pairs_instances
 

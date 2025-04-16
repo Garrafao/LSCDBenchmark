@@ -67,15 +67,15 @@ class WICModel(BaseModel, ABC):
         
         non_cached = self._get_non_cached(merged_df)
         new_use_pairs = self._filter_new_use_pairs(use_pairs, non_cached)
-        
+
         new_predictions = self.predict(use_pairs=new_use_pairs)
         if self.scaler is not None:
             new_predictions = self._scale_predictions(new_predictions)
         
         full_predictions = self._combine_predictions(non_cached, new_predictions, merged_df)
         self._update_cache(non_cached, new_predictions)
-        self._save_cache()
-        
+        #self._save_cache() # temporarily disabled
+       
         return list(full_predictions.values())
 
     def _prepare_use_identifiers(self, use_pairs: list[tuple[Use, Use]]) -> tuple[list[str], list[str]]:

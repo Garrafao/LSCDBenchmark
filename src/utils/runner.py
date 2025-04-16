@@ -157,4 +157,4 @@ def run(
         if score is None:
              score = np.nan
         
-    return score
+    return score, predictions

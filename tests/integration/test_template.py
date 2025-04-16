@@ -36,9 +36,9 @@ class TestModels(unittest.TestCase):
                 ))
 
         # Run 
-        score1 = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
-        assert pytest.approx(1.0) == score1
+        assert pytest.approx(1.0) == score
 
     def some_other_test_function(self) -> None:
         pass

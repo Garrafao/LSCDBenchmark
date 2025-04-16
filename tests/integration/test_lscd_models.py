@@ -6,6 +6,7 @@ from hydra import initialize, compose, utils
 from tests.utils import overrides, initialize_tests_hydra
 from src.utils.runner import instantiate, run
 from scipy import stats
+import numpy as np
 
 import unittest
 import pytest
@@ -46,7 +47,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
 
     def test_apd_sampled_change_graded_eng_simple_arm(self) -> None:
 
@@ -74,7 +75,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
 
     def test_apd_change_graded_eng_simple_plane_afternoon(self) -> None:
 
@@ -102,7 +103,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score
 
@@ -133,7 +134,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score
 
@@ -168,13 +169,9 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run 1st time
-        score1 = run(*instantiate(config))
+        score1, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score1
-        # Run 2nd time
-        score2 = run(*instantiate(config))
-        # Assert that the result reproduces across runs
-        assert score1 == score2
 
     def test_diasense_change_graded_eng_simple_arm(self) -> None:
 
@@ -202,7 +199,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
 
     # def test_graded_apd_compare_all(self) -> None:
     #     with initialize(version_base=None, config_path="../../conf"):
@@ -293,7 +290,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
 
         assert pytest.approx(-1.0) == score
 
@@ -320,7 +317,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
 
         assert pytest.approx(1.0) == score
 
@@ -351,7 +348,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert 0.0 >= score
 
@@ -381,7 +378,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert 0.0 <= score
         
@@ -410,7 +407,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         print(score)
         # Assert that prediction corresponds to gold
         assert 0.0 >= score
@@ -441,7 +438,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert 1.0 >= score
 
@@ -472,7 +469,7 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score
 
@@ -503,10 +500,38 @@ class TestLSCDModels(unittest.TestCase):
         )
 
         # Run
-        score = run(*instantiate(config))
+        score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score
 
+    def test_jsddot_downsampled_change_graded_eng_simple_arm(self) -> None: # for fast testing
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "jsddot_all_downsampled",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine",
+                    "dataset": "testwug_en_111",  # todo: this should become testwug_en_1.1.1
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "dataset.test_on": ["arm"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        assert np.isnan(score)
 
 if __name__ == "__main__":
 

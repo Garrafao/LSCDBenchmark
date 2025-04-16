@@ -38,13 +38,13 @@ class TestWICModels(unittest.TestCase):
                 ))
 
         # Run 1st time
-        score1 = run(*instantiate(config))
+        score1, predictions1 = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         print(score1)
         assert score1 > 0.0
         #assert pytest.approx(1.0) == score1
         # Run 2nd time
-        score2 = run(*instantiate(config))
+        score2, predictions2 = run(*instantiate(config))
         # Assert that the result reproduces across runs
         assert score1 == score2
 
