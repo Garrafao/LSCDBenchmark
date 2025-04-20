@@ -17,7 +17,7 @@ class APD(GradedLSCDModel):
     use_pair_options: UsePairOptions = Field(alias="use_pairs")
 
     def predict(self, lemma: Lemma) -> float:
-        logger.info(f"[APD] Starting prediction for lemma: {str(lemma.path).split('/')[-1]}")
+        logger.info(f"[APD] Starting prediction for lemma: ")
         use_pairs = lemma.use_pairs(
             group=self.use_pair_options.group, 
             sample=self.use_pair_options.sample # sampling here will override sampling and predict_all, more of efficiency problem
@@ -52,8 +52,8 @@ class DiaSense(GradedLSCDModel):
     use_pair_options: UsePairOptions = Field(alias="use_pairs")
 
     def predict(self, lemma: Lemma) -> float:
-        logger.info(f"[DiaSense] Starting prediction for lemma: {str(lemma.path).split('/')[-1]}")
-        use_pairs_0 = lemma.use_pairs(group="COMPARE", sample=self.use_pair_options.sample) # sampling here will override sampling and predict_all, more of efficiency problem
+        logger.info(f"[DiaSense] Starting prediction for lemma: ")
+        use_pairs_0 = lemma.use_pairs(group="COMPARE", sample=self.use_pair_options.sample)
         logger.info(f"[DiaSense] Got {len(use_pairs_0)} COMPARE use pairs")
         use_pairs_1 = lemma.use_pairs(group="ALL", sample=self.use_pair_options.sample)
         logger.info(f"[DiaSense] Got {len(use_pairs_1)} ALL use pairs")
@@ -86,8 +86,8 @@ class JSDDOT(GradedLSCDModel):
     use_pair_options: UsePairOptions = Field(alias="use_pairs")
 
     def predict(self, lemma: Lemma) -> float:
-        logger.info(f"[JSDDOT] Starting prediction for lemma: {str(lemma.path).split('/')[-1]}")
-        use_pairs_0 = lemma.use_pairs(group="EARLIER", sample=self.use_pair_options.sample) # sampling here will override sampling and predict_all, more of efficiency problem
+        logger.info(f"[JSDDOT] Starting prediction for lemma: ")
+        use_pairs_0 = lemma.use_pairs(group="EARLIER", sample=self.use_pair_options.sample)
         logger.info(f"[JSDDOT] Got {len(use_pairs_0)} EARLIER use pairs")
         use_pairs_1 = lemma.use_pairs(group="LATER", sample=self.use_pair_options.sample)
         logger.info(f"[JSDDOT] Got {len(use_pairs_1)} LATER use pairs")

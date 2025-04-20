@@ -272,6 +272,7 @@ class Dataset(BaseModel):
 
     @property
     def graded_change_labels(self) -> dict[str, float]:
+        self.stats_groupings_df["grouping"] = self.stats_groupings_df["grouping"].astype(str)
         stats_groupings = self.get_stats_groupings_schema("change_graded").validate(
             self.stats_groupings_df
         )
