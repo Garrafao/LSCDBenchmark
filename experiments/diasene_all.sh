@@ -130,7 +130,7 @@ done
 for dataset in dwug_en_300 dwug_en_resampled_100; do
     CUDA_VISIBLE_DEVICES=3 python main.py \
         dataset=$dataset \
-        dataset/spelling_normalization=english \
+        dataset/spelling_normalization=none \
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
@@ -145,7 +145,7 @@ done
 for dataset in dwug_en_300 dwug_en_resampled_100; do
     CUDA_VISIBLE_DEVICES=3 python main.py \
         dataset=$dataset \
-        dataset/spelling_normalization=english \
+        dataset/spelling_normalization=none \
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
@@ -162,7 +162,7 @@ done
 for dataset in dwug_en_300 dwug_en_resampled_100; do
   CUDA_VISIBLE_DEVICES=3 python main.py \
     dataset=$dataset \
-    dataset/spelling_normalization=english \
+    dataset/spelling_normalization=none \
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
