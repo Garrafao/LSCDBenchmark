@@ -8,7 +8,7 @@ for dataset in dwug_sv_300 dwug_sv_resampled_100 ; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=xlm-roberta-large \
@@ -23,7 +23,7 @@ for dataset in dwug_sv_300 dwug_sv_resampled_100; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=pierluigic/xl-lexeme  \
@@ -39,7 +39,7 @@ for dataset in dwug_sv_300 dwug_sv_resampled_100; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC+RSS+DWUG+XLWSD  \
@@ -55,7 +55,7 @@ for dataset in dwug_sv_300 dwug_sv_resampled_100; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC_DWUG+XLWSD \
@@ -72,7 +72,7 @@ for dataset in dwug_de_300 dwug_de_resampled_100 discowug_200; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=xlm-roberta-large \
@@ -88,7 +88,7 @@ for dataset in dwug_de_300 dwug_de_resampled_100 discowug_200; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=pierluigic/xl-lexeme  \
@@ -103,7 +103,7 @@ for dataset in dwug_de_300 dwug_de_resampled_100 discowug_200; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC+RSS+DWUG+XLWSD  \
@@ -118,7 +118,7 @@ for dataset in dwug_de_300 dwug_de_resampled_100 discowug_200; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC_DWUG+XLWSD \
@@ -134,7 +134,7 @@ for dataset in dwug_en_300 dwug_en_resampled_100; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC_DWUG+XLWSD \
@@ -149,7 +149,7 @@ for dataset in dwug_en_300 dwug_en_resampled_100; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC+RSS+DWUG+XLWSD  \
@@ -166,7 +166,7 @@ for dataset in dwug_en_300 dwug_en_resampled_100; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=xlm-roberta-large \
@@ -183,7 +183,7 @@ for dataset in dwug_en_300 dwug_en_resampled_100; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=pierluigic/xl-lexeme  \
@@ -198,7 +198,7 @@ for dataset in dwug_it_300 chiwug_100 dwug_es_402 nor_dia_change_1_101 nor_dia_c
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC+RSS+DWUG+XLWSD  \
@@ -214,7 +214,7 @@ for dataset in dwug_it_300 chiwug_100 dwug_es_402 nor_dia_change_1_101 nor_dia_c
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC_DWUG+XLWSD \
@@ -229,7 +229,7 @@ for dataset in dwug_it_300 chiwug_100 dwug_es_402 nor_dia_change_1_101 nor_dia_c
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=xlm-roberta-large \
@@ -244,7 +244,7 @@ for dataset in dwug_it_300 chiwug_100 dwug_es_402 nor_dia_change_1_101 nor_dia_c
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=pierluigic/xl-lexeme  \
@@ -261,7 +261,7 @@ for dataset in rushifteval1_200 rushifteval2_200 rushifteval3_200 rusemshift_1_2
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC+RSS+DWUG+XLWSD  \
@@ -277,7 +277,7 @@ for dataset in rushifteval1_200 rushifteval2_200 rushifteval3_200 rusemshift_1_2
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC_DWUG+XLWSD \
@@ -292,7 +292,7 @@ for dataset in rushifteval1_200 rushifteval2_200 rushifteval3_200 rusemshift_1_2
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=xlm-roberta-large \
@@ -308,7 +308,7 @@ for dataset in rushifteval1_200 rushifteval2_200 rushifteval3_200 rusemshift_1_2
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=pierluigic/xl-lexeme  \
@@ -323,7 +323,7 @@ for dataset in durel_300 surel_300; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC+RSS+DWUG+XLWSD  \
@@ -338,7 +338,7 @@ for dataset in durel_300 surel_300; do
         dataset/preprocessing=raw \
         dataset/split=full \
         task=lscd_graded \
-        task/lscd_graded@task.model=apd_compare_all \
+        task/lscd_graded@task.model=diasense_all \
         +task/wic/metric@task.model.wic.similarity_metric=cosine \
         task/wic@task.model.wic=deepmistake \
         task/wic/dm_ckpt@task.model.wic.ckpt=WIC_DWUG+XLWSD \
@@ -353,7 +353,7 @@ for dataset in durel_300 surel_300; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=xlm-roberta-large \
@@ -368,7 +368,7 @@ for dataset in durel_300 surel_300; do
     dataset/preprocessing=raw \
     dataset/split=full \
     task=lscd_graded \
-    task/lscd_graded@task.model=apd_compare_all \
+    task/lscd_graded@task.model=diasense_all \
     task/wic@task.model.wic=contextual_embedder \
     task/wic/metric@task.model.wic.similarity_metric=cosine \
     task.model.wic.ckpt=pierluigic/xl-lexeme  \
