@@ -2,14 +2,17 @@ import json
 import os
 import shutil
 import subprocess
+import tarfile
 import zipfile
 from logging import getLogger
 from pathlib import Path
 from typing import Any, TypedDict, _TypedDict
+import fnmatch
 
 import numpy as np
 import pandas as pd
 import requests
+import torch.cuda
 from deepmistake.deepmistake import DeepMistakeWiC
 from deepmistake.utils import DataProcessor, Example
 from git import Repo
@@ -28,6 +31,7 @@ class Model(BaseModel):
 
     name: str
     url: str
+    fnpattern: str = None
 
 
 def use_pair_group(use_pair: tuple[Use, Use]) -> str:
@@ -69,7 +73,7 @@ class DMWrapperClass(WICModel):
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
         
-        if not self.ckpt_dir.exists():
+        if not self.ckpt_dir.exists() or not (self.ckpt_dir / 'pytorch_model.bin').exists():
             self.init_ckpt()
 
     def __enter__(self) -> None:
@@ -96,7 +100,8 @@ class DMWrapperClass(WICModel):
     @property
     def dm_model(self) -> DeepMistakeWiC:
         """ """
-        return DeepMistakeWiC(self.ckpt_dir, device="cuda")
+        print('Loading ', self.ckpt_dir)
+        return DeepMistakeWiC(self.ckpt_dir, device="cuda" if torch.cuda.is_available() else 'cpu')
     
     def init_ckpt(self) -> None:
         """ """
@@ -105,27 +110,43 @@ class DMWrapperClass(WICModel):
         self.__unzip_ckpt(zipped)
 
     def __unzip_ckpt(self, zipped: Path) -> None:
-        with zipfile.ZipFile(file=zipped) as z:
-            namelist = z.namelist()[1:]  # remove root element
+        if zipped.suffix == '.zip':
+            with zipfile.ZipFile(file=zipped) as z:
+                namelist = z.namelist()[1:]  # remove root element
 
-            for filename in tqdm(
-                namelist, desc="Unzipping checkpoint files", leave=False
-            ):
-                filename_p = Path(filename)
-                path = self.ckpt_dir / filename_p.parts[-1]
-                with path.open(mode="wb") as file_obj:
-                    shutil.copyfileobj(z.open(filename, mode="r"), file_obj)
+                for filename in tqdm(
+                    namelist, desc="Unzipping checkpoint files", leave=False
+                ):
+                    filename_p = Path(filename)
+                    path = self.ckpt_dir / filename_p.parts[-1]
+                    with path.open(mode="wb") as file_obj:
+                        shutil.copyfileobj(z.open(filename, mode="r"), file_obj)
+        else:
+            pat = self.ckpt.fnpattern
+            with tarfile.open(zipped) as tar:
+                namelist = [m for m in tar.getnames() ]
+                for filename in tqdm(namelist, desc="Unzipping checkpoint files", leave=False):
+                    if filename.endswith('/'): continue
+                    if pat and not fnmatch.fnmatch(filename, pat):
+                        print(f'{filename} does not match the pattern {pat}, skipping')
+                        continue
+                    filename_p = Path(filename)
+                    path = self.ckpt_dir / filename_p.parts[-1]
+                    with path.open(mode="wb") as file_obj:
+                        shutil.copyfileobj(tar.extractfile(filename), file_obj)
 
         zipped.unlink()
 
     def __download_ckpt(self) -> Path:
         filename = self.ckpt.url.split("/")[-1]
-        assert filename.endswith(".zip")
-
-        r = requests.get(self.ckpt.url, stream=True)
         ckpt_dir = self.ckpt_dir
-        ckpt_dir.mkdir(parents=True, exist_ok=True)
         path = ckpt_dir / filename
+        if path.exists():
+            return path
+        assert filename.endswith(".zip") or filename.endswith(".tar.gz"), f'Incorrect URL {filename}'
+        print('Downloading: ',self.ckpt.url)
+        r = requests.get(self.ckpt.url, stream=True)
+        ckpt_dir.mkdir(parents=True, exist_ok=True)
 
         with open(file=path, mode="wb") as f:
             pbar = tqdm(
