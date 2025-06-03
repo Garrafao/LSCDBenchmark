@@ -132,8 +132,12 @@ class DMWrapperClass(WICModel):
                         continue
                     filename_p = Path(filename)
                     path = self.ckpt_dir / filename_p.parts[-1]
+                    src = tar.extractfile(filename)
+                    if src is None:
+                        print(f'{filename} is not a regular file or cannot be extracted, skipping')
+                        continue
                     with path.open(mode="wb") as file_obj:
-                        shutil.copyfileobj(tar.extractfile(filename), file_obj)
+                        shutil.copyfileobj(src, file_obj)
 
         zipped.unlink()
 
