@@ -43,6 +43,8 @@ class StandardSplit(BaseModel):
     dev2: list[str]
     test: list[str]
     full: list[str]
+    comedi_dev: list[str] 
+    comedi_test: list[str]
 
 
 class UsePairCache(BaseModel):
@@ -55,7 +57,7 @@ class UsePairCache(BaseModel):
 class Dataset(BaseModel):
     groupings: tuple[str, str]
     type: Literal["dev", "test"]
-    split: Literal["dev", "dev1", "dev2", "test", "full"]
+    split: Literal["dev", "dev1", "dev2", "test", "full", "comedi_dev", "comedi_test"]
     exclude_annotators: list[str]
     path: Path
     name: str
@@ -467,9 +469,9 @@ class Dataset(BaseModel):
             case "dev":
                 dev1 = Series(all_lemmas).sample(frac=0.5, replace=False).tolist()
                 dev2 = list(set(all_lemmas).difference(dev1))
-                return StandardSplit(dev=all_lemmas, dev1=dev1, dev2=dev2, test=[], full=all_lemmas)
+                return StandardSplit(dev=all_lemmas, dev1=dev1, dev2=dev2, test=[], full=all_lemmas, comedi_dev=[], comedi_test=[])
             case "test":
-                return StandardSplit(dev=[], dev1=[], dev2=[], test=all_lemmas, full=all_lemmas)
+                return StandardSplit(dev=[], dev1=[], dev2=[], test=all_lemmas, full=all_lemmas, comedi_dev=[], comedi_test=[])
 
     def get_split(self) -> list[str]:
         assert self.standard_split is not None
@@ -484,6 +486,10 @@ class Dataset(BaseModel):
                 return self.standard_split.test
             case "dev":
                 return self.standard_split.dev
+            case "comedi_dev":
+                return self.standard_split.comedi_dev
+            case "comedi_test":
+                return self.standard_split.comedi_test
 
     # def filter_lemmas(self, lemmas: list[Lemma]) -> list[Lemma]:
     #     if utils.is_str_set(self.test_on):

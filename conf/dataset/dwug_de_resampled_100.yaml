@@ -14,6 +14,9 @@ wic_use_pairs:
   sample: annotated
 path: dwug_de_resampled_100
 standard_split:
+  comedi_dev:
+    - Naturschönheit
+    - verbauen
   dev:
     - Abgesang
     - Frechheit
@@ -79,6 +82,11 @@ standard_split:
     - weitgreifend
     - überspannen
   test: []
+  comedi_test:
+    - Kubikmeter
+    - Mulatte
+    - vorweisen
+    - überspannen
 test_on: null
 type: dev
 url: https://zenodo.org/records/12670698/files/dwug_de_resampled.zip

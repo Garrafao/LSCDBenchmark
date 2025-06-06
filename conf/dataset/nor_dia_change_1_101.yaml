@@ -13,47 +13,14 @@ wic_use_pairs:
   sample: annotated
 path: nor_dia_change_1_101
 standard_split:
-  dev:
-    - anfektelse  
-    - bit  
-    - bølge  
-    - damp  
-    - data  
-    - egg  
-    - etterforskning  
-    - fag  
-    - fil  
-    - forhold  
-    - formiddagen  
-    - frakk  
-    - gress  
-    - horisont  
-    - husrom  
-    - idiot  
-    - kart  
-    - katt  
-    - kjemi  
-    - kloakk  
-    - landet  
-    - leder  
-    - leilighet  
-    - linse  
-    - lyng  
-    - mening  
-    - mål  
-    - operasjon  
-    - plattform  
-    - pære  
-    - rad  
-    - rev  
-    - ris  
-    - sete  
-    - skjerm  
-    - stoff  
-    - tro  
-    - tropp  
-    - varsel  
-    - ørret   
+  dev: []
+  test: []
+  comedi_dev:
+    - etterforskning
+    - frakk
+    - horisont
+    - operasjon
+    - pære   
   dev1:
     - anfektelse  
     - bit  
@@ -138,7 +105,12 @@ standard_split:
     - tropp  
     - varsel  
     - ørret  
-  test: []
+  comedi_test: 
+    - damp
+    - kloakk
+    - lyng
+    - varsel
+    - virus
 test_on: null
 type: dev
 url: https://github.com/Garrafao/nor_dia_change.git

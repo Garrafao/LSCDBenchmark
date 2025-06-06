@@ -14,6 +14,12 @@ wic_use_pairs:
   sample: annotated
 path: dwug_en_300
 standard_split:
+  comedi_dev: 
+    - fiction_nn
+    - gas_nn
+    - graft_nn
+    - grain_nn
+    - thump_nn
   dev: []
   dev1: []
   dev2: []
@@ -63,53 +69,18 @@ standard_split:
     - tip_vb
     - tree_nn
     - twist_nn
-  test:
-    - afternoon_nn
-    - attack_nn
-    - bag_nn
-    - ball_nn
-    - bar_nn
-    - bit_nn
+  test: []
+  comedi_test:
     - chairman_nn
-    - chef_nn
-    - circle_vb
-    - contemplation_nn
-    - donkey_nn
-    - edge_nn
     - face_nn
-    - fiction_nn
-    - gas_nn
-    - graft_nn
-    - grain_nn
-    - head_nn
-    - heel_nn
     - include_vb
-    - land_nn
-    - lane_nn
-    - lass_nn
-    - maxim_nn
-    - multitude_nn
-    - ounce_nn
-    - part_nn
     - pick_vb
     - pin_vb
-    - plane_nn
     - player_nn
-    - prop_nn
-    - quilt_nn
-    - rag_nn
     - rally_nn
     - record_nn
-    - relationship_nn
-    - risk_nn
-    - savage_nn
-    - stab_nn
-    - stroke_vb
-    - thump_nn
     - tip_vb
-    - tree_nn
     - twist_nn
-    - word_nn
 test_on: null
 type: test
 url: https://zenodo.org/records/14028531/files/dwug_en.zip

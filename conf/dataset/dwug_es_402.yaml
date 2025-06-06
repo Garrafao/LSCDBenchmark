@@ -14,6 +14,17 @@ wic_use_pairs:
   sample: annotated
 path: dwug_es_402
 standard_split:
+  comedi_dev:
+    - aguantar
+    - albergar
+    - canal
+    - cobrar
+    - corona
+    - disco
+    - encargado
+    - intolerable
+    - mujer
+    - vuestro
   dev: []
   dev1: []
   dev2: []
@@ -118,67 +129,28 @@ standard_split:
     - viernes
     - visita
     - vuestro
-  test:
-    - actitud
-    - ataque
-    - atrás
+  comedi_test:
+    - abundar
+    - asolar
     - ausencia
-    - avance
-    - banco
-    - canal
-    - capital
-    - cobrar
-    - colaborar
-    - compasión
-    - copiar
-    - corriente
-    - cólera
-    - declinar
-    - demá
-    - diligencia
-    - disco
-    - distribuir
-    - educado
-    - elocuente
-    - encargado
+    - contingente
     - enterar
-    - especulación
     - fallar
     - fallecimiento
-    - historia
-    - historiador
-    - impulso
-    - indicativo
-    - juguete
-    - maduro
-    - maravilloso
     - marco
-    - matiz
-    - metal
-    - metro
-    - modificado
+    - modo
     - médula
-    - nombrar
-    - pendiente
     - pila
-    - planta
-    - prima
-    - propiamente
-    - próximo
+    - pretender
     - recomendar
     - recordar
+    - reforma
     - retroceder
-    - satélite
-    - socialista
-    - solicitud
-    - susceptible
+    - tablero
     - tarea
-    - trato
     - tropical
-    - variedad
-    - viernes
-    - visita
-    - vuestro
+    - verdaderamente
+  test: []
 test_on: null
 type: test
 url: https://zenodo.org/records/14891659/files/dwug_es.zip

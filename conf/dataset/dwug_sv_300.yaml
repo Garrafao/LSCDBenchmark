@@ -14,6 +14,12 @@ wic_use_pairs:
   sample: annotated
 path: dwug_sv_300
 standard_split:
+  comedi_dev:
+    - annandag
+    - bedömande
+    - bröllop
+    - gloria
+    - konduktör
   dev: []
   dev1: []
   dev2: []
@@ -62,51 +68,17 @@ standard_split:
     - uträtta
     - vaktmästare
     - vegetation
-  test:
-    - aktiv
-    - anda
-    - annandag
-    - antyda
-    - bearbeta
-    - bedömande
-    - beredning
-    - blockera
+  test: []
+  comedi_test:
     - bolagsstämma
-    - bröllop
     - by
-    - bäck
-    - central
     - dun
     - fack
-    - framlida
     - färg
-    - fången
-    - förhandling
-    - gagn
-    - gloria
-    - granskare
-    - ingående
-    - jordisk
-    - kemisk
-    - kokärt
-    - konduktör
-    - krita
-    - ledning
-    - medium
-    - mode
-    - motiv
-    - notis
-    - sittning
-    - studie
-    - stöt
-    - undertrycka
     - uppfattning
     - uppfostran
     - uppläggning
-    - uppslag
-    - uträtta
     - vaktmästare
-    - vegetation
 test_on: null
 type: test
 url: https://zenodo.org/records/14028906/files/dwug_sv.zip

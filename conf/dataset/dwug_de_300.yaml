@@ -14,57 +14,25 @@ wic_use_pairs:
   sample: annotated
 path: dwug_de_300
 standard_split:
-  dev:
-    - Abgesang
-    - Ackergerät
-    - Armenhaus
+  dev: []
+  comedi_dev:
     - Ausnahmegesetz
-    - Behandlung
-    - Dynamik
-    - Einreichung
-    - Eintagsfliege
-    - Engpaß
+    - Blech
     - Entscheidung
-    - Festspiel
-    - Frechheit
-    - Fuß
-    - Gesichtsausdruck
-    - Knotenpunkt
-    - Kubikmeter
-    - Lyzeum
-    - Manschette
-    - Mißklang
-    - Mulatte
-    - Mut
+    - Kölner
     - Naturschönheit
-    - Ohrwurm
-    - Pachtzins
-    - Rezeption
-    - Schmiere
-    - Seminar
+    - Prise
+    - Rang
+    - Schokolade
     - Sensation
-    - Spielball
-    - Tier
-    - Titel
+    - Sprachrohr
+    - Strudel
     - Tragfähigkeit
-    - Truppenteil
-    - Unentschlossenheit
-    - abbauen
-    - abdecken
-    - abgebrüht
-    - artikulieren
-    - aufrechterhalten
-    - ausspannen
-    - beimischen
-    - packen
+    - greifend
+    - technisch
     - verbauen
-    - vergönnen
-    - voranstellen
-    - vorliegen
-    - vorweisen
-    - weitgreifend
+    - wuchernd
     - zersetzen
-    - überspannen
   dev1:
     - vorliegen
     - vorweisen
@@ -167,6 +135,41 @@ standard_split:
     - vorweisen
     - weitgreifend
     - zersetzen
+    - überspannen
+  comedi_test: 
+    - Ackergerät
+    - Anstalt
+    - Anstellung
+    - Aufkommen
+    - Aufrichtung
+    - Behandlung
+    - Feder
+    - Fischerei
+    - Formgebung
+    - Gemüse
+    - Glas
+    - Knotenpunkt
+    - Kubikmeter
+    - Lyzeum
+    - Mulatte
+    - Reichstag
+    - Titel
+    - Triebkraft
+    - Vernehmen
+    - Vorbereitung
+    - abdecken
+    - abgebrüht
+    - abspalten
+    - erlauben
+    - flott
+    - geehrt
+    - geharnischt
+    - helfen
+    - preisgeben
+    - regelrecht
+    - schlagen
+    - vorweisen
+    - Überflutung
     - überspannen
   test: []
 test_on: null

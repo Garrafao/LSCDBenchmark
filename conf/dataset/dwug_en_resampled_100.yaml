@@ -49,6 +49,13 @@ standard_split:
     - stab_nn
     - thump_nn
     - twist_nn
+  comedi_dev:
+    - graft_nn
+    - thump_nn
+  comedi_test:
+    - player_nn
+    - record_nn
+    - twist_nn
 test_on: null
 type: test
 url: https://zenodo.org/records/14025941/files/dwug_en_resampled.zip

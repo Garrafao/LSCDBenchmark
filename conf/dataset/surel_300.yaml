@@ -63,6 +63,15 @@ standard_split:
     - Schuß
     - Strudel
     - trennen
+  comedi_dev:
+    - Blech
+    - Prise
+    - Schokolade
+    - Strudel
+  comedi_test:
+    - Gemüse
+    - Glas
+    - schlagen
 test_on: null
 type: test
 url: https://zenodo.org/record/5784569/files/surel.zip

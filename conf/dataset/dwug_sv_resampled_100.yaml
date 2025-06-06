@@ -49,6 +49,12 @@ standard_split:
     - motiv
     - uppfattning
     - vegetation
+  comedi_dev:
+    - bedömande
+    - konduktör
+  comedi_test:
+    - färg
+    - uppfattning
 test_on: null
 type: test
 url: https://zenodo.org/records/14026615/files/dwug_sv_resampled.zip

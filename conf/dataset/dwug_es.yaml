@@ -14,7 +14,17 @@ wic_use_pairs:
   sample: annotated
 path: dwug_es
 standard_split:
-  dev: []
+  dev:
+    - aguantar
+    - albergar
+    - canal
+    - cobrar
+    - corona
+    - disco
+    - encargado
+    - intolerable
+    - mujer
+    - vuestro
   dev1: []
   dev2: []
   full:
@@ -84,69 +94,25 @@ standard_split:
     - vuestro
   test:
     - abundar
-    - actitud
-    - agradecer
-    - albergar
-    - ataque
-    - atrás
-    - avance
-    - banco
-    - canal
-    - capital
-    - compasión
+    - asolar
+    - ausencia
     - contingente
-    - corona
-    - corriente
-    - cólera
-    - creciente
-    - declinar
-    - demá
-    - descendiente
-    - distribuir
-    - educado
-    - elocuente
-    - empresa
-    - encargado
-    - especulación
+    - enterar
+    - fallar
     - fallecimiento
-    - gracioso
-    - historiador
-    - impulso
-    - instalación
-    - interrogatorio
-    - intolerable
-    - maduro
-    - maravilloso
     - marco
-    - matiz
-    - metal
     - modo
-    - mortal
-    - mujer
-    - no
-    - nombramiento
-    - pelear
+    - médula
     - pila
-    - planta
-    - prima
-    - propiamente
-    - propuesta
-    - quemar
+    - pretender
     - recomendar
     - recordar
     - reforma
-    - saludar
-    - servidor
-    - sexo
-    - socialista
-    - solicitud
-    - suposición
-    - susceptible
+    - retroceder
     - tablero
     - tarea
-    - trato
-    - viernes
-    - vuestro
+    - tropical
+    - verdaderamente
 test_on: null
 type: test
 url: https://zenodo.org/records/6433667/files/dwug_es.zip

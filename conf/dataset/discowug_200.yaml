@@ -168,7 +168,31 @@ standard_split:
     - überwintern  
     - vorjährig  
     - wuchernd  
-    - zurückwerfen  
+    - zurückwerfen
+  comedi_dev:
+    - Kölner
+    - Rang
+    - Sprachrohr
+    - greifend
+    - wuchernd
+  comedi_test:
+    - Aufkommen
+    - Aufrichtung
+    - Fischerei
+    - Formgebung
+    - Triebkraft
+    - Vernehmen
+    - Vorbereitung
+    - abspalten
+    - erlauben
+    - geehrt
+    - greifend
+    - helfen
+    - preisgeben
+    - regelrecht
+    - Überflutung
+    - wuchernd
+
 test_on: null
 type: test
 url: https://zenodo.org/records/14028592/files/discowug.zip

@@ -13,47 +13,12 @@ wic_use_pairs:
   sample: annotated
 path: nor_dia_change_2_101
 standard_split:
-  dev:
-    - Syden  
-    - bank  
-    - bystyrerepresentant  
-    - driftsregnskap  
-    - fane  
-    - fjær  
-    - innstilling  
-    - kanal  
-    - kjøpepress  
-    - kode  
+  dev: []
+  test: []
+  comedi_dev:
+    - melding
+    - kode
     - kohort  
-    - kreft  
-    - mappe  
-    - melding  
-    - melk  
-    - moment  
-    - mus  
-    - nett  
-    - oppvarming  
-    - overflate  
-    - papir  
-    - rådgiver  
-    - side  
-    - sky  
-    - spill  
-    - storby  
-    - stryk  
-    - strøm  
-    - særforbund  
-    - tape  
-    - tavle  
-    - tendens  
-    - terror  
-    - test  
-    - tjener  
-    - utakt  
-    - vert  
-    - vindu  
-    - virkelighet  
-    - virus  
   dev1: []
   dev2: []
   full:
@@ -97,7 +62,18 @@ standard_split:
     - vindu  
     - virkelighet  
     - virus  
-  test: []
+  comedi_test:
+    - Syden
+    - moment
+    - mus
+    - oppvarming
+    - rådgiver
+    - storby
+    - strøm
+    - tendens
+    - tjener
+    - virkelighet
+    - virus
 test_on: null
 type: dev
 url: https://github.com/Garrafao/nor_dia_change.git

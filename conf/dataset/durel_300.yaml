@@ -14,8 +14,10 @@ wic_use_pairs:
   sample: annotated
 path: durel_300
 standard_split:
-  dev: []
+  comedi_dev: 
+    - technisch
   dev1: []
+  dev: []
   dev2: []
   full:
     - Abend
@@ -63,6 +65,13 @@ standard_split:
     - technisch
     - Vorwort
     - Zufall
+  comedi_test:
+    - Anstalt
+    - Anstellung
+    - Feder
+    - flott
+    - geharnischt
+    - Reichstag
 test_on: null
 type: test
 url: https://zenodo.org/record/5784453/files/durel.zip
