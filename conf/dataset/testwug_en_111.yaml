@@ -10,6 +10,11 @@ groupings:
 - '2'
 path: testwug_en_111
 standard_split:
+  comedi_dev: 
+  - afternoon_nn
+  - arm
+  - target
+  - plane_nn
   dev:
   - afternoon_nn
   - arm
@@ -27,6 +32,7 @@ standard_split:
   - target
   - plane_nn
   test: []
+  comedi_test: []
 test_on: null
 type: dev
 url: https://zenodo.org/record/7946753/files/testwug_en.zip
