@@ -83,10 +83,6 @@ python main.py \
   ~evaluation
 ```
 
-## Possible issues
-
-- you may have to adjust the CUDA version specified in requirements.txt to your local requirements for the GPU.
-
 ## References
 
 <a id="1">[1]</a>
