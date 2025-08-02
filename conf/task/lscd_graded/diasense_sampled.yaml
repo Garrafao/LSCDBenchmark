@@ -6,5 +6,5 @@ _target_: src.lscd.DiaSense
 use_pairs:
   group: ALL
   sample:
-    n: 500
+    n: ???
     replace: false
