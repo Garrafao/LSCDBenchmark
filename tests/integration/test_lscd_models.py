@@ -60,6 +60,7 @@ class TestLSCDModels(unittest.TestCase):
                     "task": "lscd_graded",
                     "task.model.wic.ckpt": "bert-base-cased",
                     "task/lscd_graded@task.model": "apd_compare_sampled",
+                    "task.model.use_pairs.sample.n": "5",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
                     "dataset": "testwug_en_111",

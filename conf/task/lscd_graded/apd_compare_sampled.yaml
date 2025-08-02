@@ -7,5 +7,5 @@ _target_: src.lscd.APD
 use_pairs:
   group: COMPARE
   sample:
-    n: 50
+    n: ???
     replace: false

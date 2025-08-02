@@ -258,9 +258,10 @@ class Lemma(BaseModel):
                 self._uses_df = pd.concat([ids1,ids2],ignore_index=True)
                 ids1, ids2 = self.split_uses(p)
                 use_pairs = list(zip(ids1, ids2)) # after changing use pair construction logic, splitting may be superfluous
-            case (sampled, p):
+            case (sampled, p): # validate
                 assert isinstance(sampled, RandomSampling)
-                ids = ids.sample(n=sampled.n, replace=sampled.replace) # validate
+                ids = self.uses_df
+                ids = ids.sample(n=sampled.n, replace=sampled.replace)
                 self._uses_df = ids
                 ids1, ids2 = self.split_uses(p)
                 use_pairs = list(zip(ids1, ids2))
