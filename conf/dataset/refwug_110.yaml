@@ -14,6 +14,8 @@ wic_use_pairs:
   sample: annotated
 path: refwug_110
 standard_split:
+  comedi_dev: 
+    - technisch
   dev: []
   dev1: []
   dev2: []
@@ -63,6 +65,13 @@ standard_split:
     - technisch
     - Vorwort
     - Zufall
+  comedi_test:
+    - Anstalt
+    - Anstellung
+    - Feder
+    - flott
+    - geharnischt
+    - Reichstag
 test_on: null
 type: test
 url: https://zenodo.org/record/5791269/files/refwug.zip

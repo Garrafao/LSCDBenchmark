@@ -1,5 +1,5 @@
 defaults:
   - _self_
-  - wic: ???
-
+  - /task/wic@wic: ???
+  
 _target_: src.lscd.Cos

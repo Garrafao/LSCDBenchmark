@@ -235,22 +235,6 @@ class TestLSCDModels(unittest.TestCase):
     #         )
     #         assert isinstance(run(*instantiate(cfg)), float)
 
-    # def test_graded_cos() -> None:
-    #     with initialize(version_base=None, config_path="../../conf"):
-    #         cfg = compose(
-    #             config_name="config",
-    #             overrides=overrides(
-    #                 {
-    #                     "task": "lscd_graded",
-    #                     "task/lscd_graded@task.model": "cos",
-    #                     "task/wic@task.model.wic": "bert",
-    #                     "dataset": "dwug_de",
-    #                     "dataset.test_on": "3",
-    #                 }
-    #             ),
-    #         )
-    #         assert isinstance(run(*instantiate(cfg)), float)
-
     # def test_binary_cos() -> None:
     #     with initialize(version_base=None, config_path="../../conf"):
     #         cfg = compose(
@@ -518,7 +502,7 @@ class TestLSCDModels(unittest.TestCase):
                     "task/lscd_graded@task.model": "jsddot_all_downsampled",
                     "task/wic@task.model.wic": "contextual_embedder",
                     "task/wic/metric@task.model.wic.similarity_metric": "cosine",
-                    "dataset": "testwug_en_111",  # todo: this should become testwug_en_1.1.1
+                    "dataset": "testwug_en_111", 
                     "dataset/split": "full",
                     "dataset/spelling_normalization": "none",
                     "dataset/preprocessing": "raw",
@@ -533,6 +517,120 @@ class TestLSCDModels(unittest.TestCase):
         score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert np.isnan(score)
+        
+    # Minimal run of model on very small data set for frequent testing purposes
+    def test_cos_change_graded_eng_simple_arm(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/lscd_graded@task.model": "cos_all",
+                    "dataset": "testwug_en_111",
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    # has very few usages
+                    "dataset.test_on": ["arm"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+       
+    def test_cos_change_graded_eng_simple_plane_afternoon(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "cos_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "dataset": "testwug_en_111",
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "lemmatization",
+                    # These 2 words have extreme change_graded values in the gold data: 0.0 and 0.94
+                    "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        assert pytest.approx(1.0) == score
+        
+    # Minimal run of model on very small data set for frequent testing purposes
+    def test_jsdsoft_change_graded_eng_simple_arm(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/lscd_graded@task.model": "jsdsoft_all",
+                    "dataset": "testwug_en_111",
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    # has very few usages
+                    "dataset.test_on": ["arm"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+       
+    def test_jsdsoft_change_graded_eng_simple_plane_afternoon(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "jsdsoft_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "dataset": "testwug_en_111",
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "lemmatization",
+                    # These 2 words have extreme change_graded values in the gold data: 0.0 and 0.94
+                    "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        assert pytest.approx(1.0) == score
 
 if __name__ == "__main__":
 

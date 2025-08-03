@@ -1,7 +1,7 @@
 defaults:
   - scaler: none
   - normalization: none
-  - metric@similarity_metric: ???
+  - metric@similarity_metric: cosine
 
 _target_: src.wic.ContextualEmbedder
 layers: [1, 12]
