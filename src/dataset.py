@@ -306,8 +306,9 @@ class Dataset(BaseModel):
             .median()
             .reset_index()
         )
+       
+        assert not judgments['i1_i2_pair'].duplicated().any()
         
-        duplicates = judgments.duplicated(subset=['i1_i2_pair'], keep=False)
         return {
             (row['i1_i2_pair'][0], row['i1_i2_pair'][1]): row['judgment']
             for row in judgments.to_dict('records')

@@ -1,4 +1,5 @@
 import json
+import numpy as np
 from abc import ABC
 from typing import Any, Callable, Literal, TypeAlias, TypedDict, TypeVar
 
@@ -42,12 +43,14 @@ class Evaluation(BaseModel, ABC):
             self.plotter(predictions=predictions, labels=labels)
 
         results = self.combine_inputs(labels=labels, predictions=predictions)
-        results.to_csv("predictions.csv", sep="\t")
-        results = results.dropna(how="any")
 
         y_true = results.label.tolist()
         y_pred = results.prediction.tolist()
         
+        assert not np.isnan(y_true).any()
+        assert not np.isnan(y_pred).any()
+        
+        results.to_csv("predictions.csv", sep="\t")
 
         result = {"score": self.metric(y_true, y_pred), "metric": self.metric.func.__name__}
 
@@ -79,12 +82,14 @@ class Evaluation(BaseModel, ABC):
         merged = pd.merge(
             left=labels_df,
             right=predictions_df,
-            how="inner",
+            how="right",
             on="instance",
             validate="one_to_one",
         )
+        
+        assert len(predictions_df) == len(merged)
 
-        first_key = list(labels.keys())[0]
+        first_key = list(labels.keys())[0] # unclear what this code is doing, validate
         if isinstance(first_key, (tuple, list, set)):
             new_cols = merged.instance.apply(pd.Series)
             new_cols.columns = [f"instance_{i}" for i in range(len(new_cols.columns))]  # type: ignore

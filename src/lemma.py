@@ -125,6 +125,8 @@ class Lemma(BaseModel):
             self._annotated_pairs_df = pd.read_csv(path, delimiter="\t", encoding="utf8", quoting=csv.QUOTE_NONE, usecols=["identifier1", "identifier2"])
             self._annotated_pairs_df['identifier1'] = self._annotated_pairs_df['identifier1'].astype(str)
             self._annotated_pairs_df['identifier2'] = self._annotated_pairs_df['identifier2'].astype(str)
+            self._annotated_pairs_df[['identifier1','identifier2']] = np.sort(self._annotated_pairs_df[['identifier1','identifier2']], axis=1) # sort within pairs to find duplicates  
+            self._annotated_pairs_df = self._annotated_pairs_df.drop_duplicates()         
             self._annotated_pairs_df = self.annotated_pairs_schema.validate(self._annotated_pairs_df)
         return self._annotated_pairs_df
 
@@ -238,10 +240,10 @@ class Lemma(BaseModel):
     def use_pairs(self, group: Group, sample: Sample) -> list[tuple[Use, Use]]:
         match (sample, group):
             case ("annotated", p):
-                ids1, ids2 = self._split_augmented_uses(p, self.augmented_annotated_pairs_df)
+                ids1, ids2 = self._split_augmented_use_pairs(p, self.augmented_annotated_pairs_df)
                 use_pairs = list(zip(ids1, ids2))
             case ("predefined", p):
-                ids1, ids2 = self._split_augmented_uses(p, self.augmented_predefined_use_pairs_df)
+                ids1, ids2 = self._split_augmented_use_pairs(p, self.augmented_predefined_use_pairs_df)
                 use_pairs = list(zip(ids1, ids2))
             case ("all", p):
                 ids1, ids2 = self.split_uses(p)
@@ -266,6 +268,7 @@ class Lemma(BaseModel):
                 ids1, ids2 = self.split_uses(p)
                 use_pairs = list(zip(ids1, ids2))
 
+        #print(use_pairs).b
         assert len(use_pairs) == len(set(use_pairs)) # we could additionally assert that switched pairs don't exist   
 
         use_pairs_instances = [(Use.from_series(self.uses_df[self.uses_df.identifier == id1].iloc[0]), Use.from_series(self.uses_df[self.uses_df.identifier == id2].iloc[0])) for id1, id2 in use_pairs]
@@ -299,30 +302,20 @@ class Lemma(BaseModel):
             self._augmented_predefined_use_pairs_df.drop(columns=drop_cols, inplace=True)
         return self._augmented_predefined_use_pairs_df
         
-    def _split_augmented_uses(self, group: Group, augmented_uses: DataFrame) -> tuple[list[UseID], list[UseID]]:
-        if group == "ALL":
-            compare_0, compare_1 = self._split_augmented_uses("COMPARE", augmented_uses)
-            earlier_0, earlier_1 = self._split_augmented_uses("EARLIER", augmented_uses)
-            later_0, later_1 = self._split_augmented_uses("LATER", augmented_uses)
-            return (
-                compare_0 + earlier_0 + later_0,
-                compare_1 + earlier_1 + later_1
-            )
+    def _split_augmented_use_pairs(self, group: Group, augmented_use_pairs: DataFrame) -> tuple[list[UseID], list[UseID]]:
 
+        group_0, group_1 = self.groupings[0], self.groupings[1]
+        
         match group:
+            case "ALL":
+                augmented_use_pairs_filtered = augmented_use_pairs
             case "COMPARE":
-                group_0, group_1 = self.groupings
+                augmented_use_pairs_filtered = augmented_use_pairs[((augmented_use_pairs.grouping_x == group_0) & (augmented_use_pairs.grouping_y == group_1)) | ((augmented_use_pairs.grouping_x == group_1) & (augmented_use_pairs.grouping_y == group_0))]
             case "EARLIER":
-                group_0, group_1 = self.groupings[0], self.groupings[0]
+                augmented_use_pairs_filtered = augmented_use_pairs[(augmented_use_pairs.grouping_x == group_0) & (augmented_use_pairs.grouping_y == group_0)]
             case "LATER":
-                group_0, group_1 = self.groupings[1], self.groupings[1]
+                augmented_use_pairs_filtered = augmented_use_pairs[(augmented_use_pairs.grouping_x == group_1) & (augmented_use_pairs.grouping_y == group_1)]
 
-        filtered = augmented_uses[
-            (augmented_uses.grouping_x == group_0)
-            & (augmented_uses.grouping_y == group_1)
-        ]
+        ids1, ids2 = augmented_use_pairs_filtered.identifier1.tolist(), augmented_use_pairs_filtered.identifier2.tolist()
 
-        return (
-            filtered.identifier1.tolist(),
-            filtered.identifier2.tolist(),
-        )
+        return ids1, ids2

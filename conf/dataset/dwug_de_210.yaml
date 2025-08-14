@@ -117,6 +117,24 @@ standard_split:
     - Seminar
     - Tragfähigkeit
     - Mißklang
+  comedi_dev:
+    - Ausnahmegesetz
+    - Blech
+    - Entscheidung
+    - Kölner
+    - Naturschönheit
+    - Prise
+    - Rang
+    - Schokolade
+    - Sensation
+    - Sprachrohr
+    - Strudel
+    - Tragfähigkeit
+    - greifend
+    - technisch
+    - verbauen
+    - wuchernd
+    - zersetzen
   full:
     - abbauen
     - abdecken
@@ -167,6 +185,41 @@ standard_split:
     - vorweisen
     - weitgreifend
     - zersetzen
+    - überspannen
+  comedi_test: 
+    - Ackergerät
+    - Anstalt
+    - Anstellung
+    - Aufkommen
+    - Aufrichtung
+    - Behandlung
+    - Feder
+    - Fischerei
+    - Formgebung
+    - Gemüse
+    - Glas
+    - Knotenpunkt
+    - Kubikmeter
+    - Lyzeum
+    - Mulatte
+    - Reichstag
+    - Titel
+    - Triebkraft
+    - Vernehmen
+    - Vorbereitung
+    - abdecken
+    - abgebrüht
+    - abspalten
+    - erlauben
+    - flott
+    - geehrt
+    - geharnischt
+    - helfen
+    - preisgeben
+    - regelrecht
+    - schlagen
+    - vorweisen
+    - Überflutung
     - überspannen
   test: []
 test_on: null
