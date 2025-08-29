@@ -21,7 +21,8 @@ from transformers import (
     PreTrainedTokenizerBase,
 )
 from transformers import logging as trans_logging
-from sentence_transformers import SentenceTransformer
+from src.utils.tuncation import tokenize_truncate_decode
+
 
 
 
@@ -370,38 +371,12 @@ class ContextualEmbedder(WICModel):
             return self.model.config.max_position_embeddings
         return None
 
-    def xl_lexeme_preprocess(self, use: Use, type: Type[T] = np.ndarray) -> T:
-        max_seq_len = self.get_max_seq_length()
-        left, target, right = use.context[:use.indices[0]], use.context[use.indices[0]:use.indices[1]], use.context[use.indices[1]:]
-
-        overflow_left = len(left) - int((max_seq_len - len(use.context[use.indices[0]:use.indices[1]])) / 2)
-        overflow_right = len(right) - int((max_seq_len - len(use.context[use.indices[0]:use.indices[1]])) / 2)
-
-        if overflow_left > 0 and overflow_right > 0:
-            left = left[overflow_left:]
-            right = right[:len(right)-overflow_right]
-
-        elif overflow_left > 0 and overflow_right <= 0:
-            left = left[overflow_left:]
-
-        else:
-            right = right[:len(right)-overflow_right]
-
-        new_context = left + '<t>' + target + '</t>' + right
-        return new_context
-        #return coleft + input_ids[positions[0]:positions[1]] + right
-
-        #left, target, right = use.context[:use.indices[0]], use.context[use.indices[0]:use.indices[1]], use.context[use.indices[1]:]
-        #new_context = left + '<t>' + target + '</t>' + right
-        #return new_context
-    
-
     def encode(self, use: Use, d_type: Type[T] = np.ndarray) -> T:
         embedding = None if self.embedding_cache is None else self.embedding_cache.retrieve(use)
         
         if embedding is None:
-            if self.ckpt == "pierluigic/xl-lexeme":
-                new_context = self.xl_lexeme_preprocess(use)
+            if self.ckpt == "pierluigic/xl-lexeme" or self.ckpt == "sachinn1/xl-durel":
+                new_context = tokenize_truncate_decode(use.context, use.indices, self.tokenizer, max_seq_len=128)
                 use.context = new_context
                 encoding = self.tokenize(use)
                 input_ids = encoding["input_ids"].to(self.device)
