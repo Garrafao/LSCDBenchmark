@@ -1,0 +1,177 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - preprocessing: ???
+  - spelling_normalization: ???
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1"
+  - "2"
+
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: dwug_de_110
+standard_split:
+  dev: []
+  comedi_dev:
+    - Ausnahmegesetz
+    - Blech
+    - Entscheidung
+    - Kölner
+    - Naturschönheit
+    - Prise
+    - Rang
+    - Schokolade
+    - Sensation
+    - Sprachrohr
+    - Strudel
+    - Tragfähigkeit
+    - greifend
+    - technisch
+    - verbauen
+    - wuchernd
+    - zersetzen
+  dev1:
+    - vorliegen
+    - vorweisen
+    - Entscheidung
+    - Mut
+    - Naturschönheit
+    - Sensation
+    - Kubikmeter
+    - Rezeption
+    - abdecken
+    - zersetzen
+    - Tier
+    - Spielball
+    - Ausnahmegesetz
+    - abbauen
+    - überspannen
+    - Fuß
+    - Unentschlossenheit
+    - Schmiere
+    - Einreichung
+    - Armenhaus
+    - Knotenpunkt
+    - Abgesang
+    - Ackergerät
+    - Titel
+    - vergönnen
+  dev2:
+    - Ohrwurm
+    - weitgreifend
+    - artikulieren
+    - aufrechterhalten
+    - Behandlung
+    - Lyzeum
+    - ausspannen
+    - Manschette
+    - Festspiel
+    - Pachtzins
+    - packen
+    - Eintagsfliege
+    - voranstellen
+    - Engpaß
+    - abgebrüht
+    - Gesichtsausdruck
+    - Truppenteil
+    - verbauen
+    - beimischen
+    - Dynamik
+    - Frechheit
+    - Mulatte
+    - Seminar
+    - Tragfähigkeit
+    - Mißklang
+  full:
+    - Abgesang
+    - Ackergerät
+    - Armenhaus
+    - Ausnahmegesetz
+    - Behandlung
+    - Dynamik
+    - Einreichung
+    - Eintagsfliege
+    - Engpaß
+    - Entscheidung
+    - Festspiel
+    - Frechheit
+    - Fuß
+    - Gesichtsausdruck
+    - Knotenpunkt
+    - Kubikmeter
+    - Lyzeum
+    - Manschette
+    - Mißklang
+    - Mulatte
+    - Mut
+    - Naturschönheit
+    - Ohrwurm
+    - Pachtzins
+    - Rezeption
+    - Schmiere
+    - Seminar
+    - Sensation
+    - Spielball
+    - Tier
+    - Titel
+    - Tragfähigkeit
+    - Truppenteil
+    - Unentschlossenheit
+    - abbauen
+    - abdecken
+    - abgebrüht
+    - artikulieren
+    - aufrechterhalten
+    - ausspannen
+    - beimischen
+    - packen
+    - verbauen
+    - vergönnen
+    - voranstellen
+    - vorliegen
+    - vorweisen
+    - weitgreifend
+    - zersetzen
+    - überspannen
+  comedi_test: 
+    - Ackergerät
+    - Anstalt
+    - Anstellung
+    - Aufkommen
+    - Aufrichtung
+    - Behandlung
+    - Feder
+    - Fischerei
+    - Formgebung
+    - Gemüse
+    - Glas
+    - Knotenpunkt
+    - Kubikmeter
+    - Lyzeum
+    - Mulatte
+    - Reichstag
+    - Titel
+    - Triebkraft
+    - Vernehmen
+    - Vorbereitung
+    - abdecken
+    - abgebrüht
+    - abspalten
+    - erlauben
+    - flott
+    - geehrt
+    - geharnischt
+    - helfen
+    - preisgeben
+    - regelrecht
+    - schlagen
+    - vorweisen
+    - Überflutung
+    - überspannen
+  test: []
+test_on: null
+type: dev
+url: https://zenodo.org/records/5544198/files/dwug_de.zip

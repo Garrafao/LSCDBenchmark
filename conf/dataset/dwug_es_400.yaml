@@ -1,0 +1,156 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - _self_
+  - preprocessing: ???
+  - spelling_normalization: ???
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1"
+  - "2"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: dwug_es_400
+standard_split:
+  comedi_dev:
+    - aguantar
+    - albergar
+    - canal
+    - cobrar
+    - corona
+    - disco
+    - encargado
+    - intolerable
+    - mujer
+    - vuestro
+  dev: []
+  dev1: []
+  dev2: []
+  full:
+    - abundar
+    - actitud
+    - adelante
+    - agradecer
+    - aguantar
+    - albergar
+    - arena
+    - asolar
+    - ataque
+    - atrás
+    - ausencia
+    - avance
+    - banco
+    - canal
+    - capital
+    - cobrar
+    - colaborar
+    - compasión
+    - contingente
+    - copiar
+    - corona
+    - corredor
+    - corriente
+    - creciente
+    - cólera
+    - declinar
+    - demá
+    - descendiente
+    - despacho
+    - diligencia
+    - disco
+    - distribuir
+    - educado
+    - elocuente
+    - empresa
+    - encargado
+    - enterar
+    - escritor
+    - especulación
+    - fallar
+    - fallecimiento
+    - gracioso
+    - historia
+    - historiador
+    - impulso
+    - indicativo
+    - instalación
+    - interrogatorio
+    - intolerable
+    - juguete
+    - maduro
+    - maravilloso
+    - marco
+    - matiz
+    - metal
+    - metro
+    - modificado
+    - modo
+    - mortal
+    - mujer
+    - médula
+    - móvil
+    - músculo
+    - "no"
+    - nombramiento
+    - nombrar
+    - obtener
+    - pelear
+    - pendiente
+    - periodista
+    - pila
+    - planta
+    - precursor
+    - pretender
+    - prima
+    - propiamente
+    - propuesta
+    - próximo
+    - quemar
+    - recomendar
+    - recordar
+    - reforma
+    - retroceder
+    - saludar
+    - satélite
+    - servidor
+    - sexo
+    - socialista
+    - solicitud
+    - suposición
+    - susceptible
+    - tablero
+    - tarea
+    - trato
+    - tropical
+    - variedad
+    - verdaderamente
+    - viernes
+    - visita
+    - vuestro
+  comedi_test:
+    - abundar
+    - asolar
+    - ausencia
+    - contingente
+    - enterar
+    - fallar
+    - fallecimiento
+    - marco
+    - modo
+    - médula
+    - pila
+    - pretender
+    - recomendar
+    - recordar
+    - reforma
+    - retroceder
+    - tablero
+    - tarea
+    - tropical
+    - verdaderamente
+  test: []
+test_on: null
+type: test
+url: https://zenodo.org/records/6433667/files/dwug_es.zip

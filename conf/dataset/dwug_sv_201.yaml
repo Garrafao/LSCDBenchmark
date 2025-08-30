@@ -1,0 +1,84 @@
+_target_: src.dataset.Dataset
+cleaning: null
+defaults:
+  - _self_
+  - preprocessing: ???
+  - spelling_normalization: ???
+  - split: ???
+exclude_annotators: []
+groupings:
+  - "1"
+  - "2"
+wic_use_pairs:
+  group: ALL
+  sample: annotated
+path: dwug_sv_201
+standard_split:
+  comedi_dev:
+    - annandag
+    - bedömande
+    - bröllop
+    - gloria
+    - konduktör
+  dev: []
+  dev1: []
+  dev2: []
+  full:
+    - aktiv
+    - anda
+    - annandag
+    - antyda
+    - bearbeta
+    - bedömande
+    - beredning
+    - blockera
+    - bolagsstämma
+    - bröllop
+    - by
+    - bäck
+    - central
+    - dun
+    - fack
+    - framlida
+    - färg
+    - fången
+    - förhandling
+    - gagn
+    - gloria
+    - granskare
+    - ingående
+    - jordisk
+    - kemisk
+    - kokärt
+    - konduktör
+    - krita
+    - ledning
+    - medium
+    - mode
+    - motiv
+    - notis
+    - sittning
+    - studie
+    - stöt
+    - undertrycka
+    - uppfattning
+    - uppfostran
+    - uppläggning
+    - uppslag
+    - uträtta
+    - vaktmästare
+    - vegetation
+  test: []
+  comedi_test:
+    - bolagsstämma
+    - by
+    - dun
+    - fack
+    - färg
+    - uppfattning
+    - uppfostran
+    - uppläggning
+    - vaktmästare
+test_on: null
+type: test
+url: https://zenodo.org/records/7389506/files/dwug_sv.zip

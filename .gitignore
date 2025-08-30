@@ -642,10 +642,5 @@ lscd.csv - Sheet1 (1).csv
 runn1.sh
 wic_new_es
 
-lscd-new
-wic-all.csv
-wic-all.model.csv
-wtes-all.csvlscd-new
-wic-all.csv
-wic-all.model.csv
-wtes-all.csv
+
+plot.ipynb
