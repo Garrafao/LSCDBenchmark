@@ -184,7 +184,10 @@ class Dataset(BaseModel):
             self.__download_from_git()
         else:
             self.__download_zip()
-        
+
+        if self.name.startswith("dwug_it"):
+            self._fix_dwug_it_groupings()
+     
         if self._check_duplicate_identifiers():
             self._patch_identifiers()
         else:
@@ -621,3 +624,20 @@ class Dataset(BaseModel):
         else:
             print(f"No duplicate identifier pairs found across lemmas in dataset '{self.name}'.")
             return False  # No duplicates found
+    
+    def _fix_dwug_it_groupings(self) -> None:
+   
+        if not self.name.startswith("dwug_it"):
+            return  
+
+        stats_path = self.absolute_path / "stats" / "stats_groupings.csv"
+        
+        df = pd.read_csv(stats_path, delimiter="\t", encoding="utf8", quoting=csv.QUOTE_NONE)
+
+        if "grouping" in df.columns:
+            df["grouping"] = df["grouping"].astype(str).apply(lambda x: "_".join(list(x)))
+            df.to_csv(stats_path, sep="\t", index=False)
+            print(f"Grouping fixed in {self.name} dataset.")
+        else:
+            print(f"Column 'grouping' not found in {stats_path}")
+

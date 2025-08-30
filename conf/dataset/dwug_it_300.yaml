@@ -44,6 +44,8 @@ standard_split:
     - trasferibile
     - ultima
     - unico
+  comedi_dev: []
+  comedi_test: []
   test:
     - affido
     - ape
