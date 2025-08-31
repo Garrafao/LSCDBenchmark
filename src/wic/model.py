@@ -51,6 +51,8 @@ class WICModel(BaseModel, ABC):
             self._cache = self.as_df()
             self._cache = self._cache.assign(use_0=None, use_1=None, prediction=None)
             self._cache = self._cache.iloc[0:0]
+            
+        print(self._cache).Blah
 
     @abstractmethod
     def as_df(self) -> DataFrame:

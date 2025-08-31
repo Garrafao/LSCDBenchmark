@@ -17,11 +17,11 @@
 # Test cache
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_apd_change_graded_eng_simple_arm
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_apd_change_graded_ger
-#python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_arm
+python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_arm
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon_lemma
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon_similarity
-python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon_model
+#python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon_model
 
 # Spanish integration tests
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_es_simple_actitud
