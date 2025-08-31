@@ -141,6 +141,7 @@ class TestCache(unittest.TestCase):
         score1, predictions1 = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         print(score1)
+        #print(predictions1)
         assert score1 > 0.0
         #assert pytest.approx(1.0) == score1
         # Run 2nd time
@@ -148,6 +149,171 @@ class TestCache(unittest.TestCase):
         # Assert that the result reproduces across runs
         assert score1 == score2
         
+    def test_bert_wic_eng_simple_plane_afternoon_lemma(self) -> None:
+        
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        # "task/wic/dm_ckpt@task.model.ckpt": "WIC_DWUG+XLWSD",
+                        "task/wic@task.model": "contextual_embedder",
+                        "task.model.ckpt": "bert-base-cased",
+                        "dataset": "testwug_en_111",
+                        "task/wic/metric@task.model.similarity_metric": "cosine",                 
+                        "dataset/split": "dev",
+                        "dataset/spelling_normalization": "english",
+                        "dataset/preprocessing": "raw",
+                        # These 2 words have extreme change_graded values in the gold data
+                        "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                        # "evaluation/plotter": "none",
+                    }
+                ))
+
+        # Run 1st time
+        score1, predictions1 = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        print(score1)
+        #print(predictions1)
+        assert score1 > 0.0
+        
+        # Run 2nd time
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        # "task/wic/dm_ckpt@task.model.ckpt": "WIC_DWUG+XLWSD",
+                        "task/wic@task.model": "contextual_embedder",
+                        "task.model.ckpt": "bert-base-cased",
+                        "dataset": "testwug_en_111",
+                        "task/wic/metric@task.model.similarity_metric": "cosine",                 
+                        "dataset/split": "dev",
+                        "dataset/spelling_normalization": "english",
+                        "dataset/preprocessing": "lemmatization",
+                        # These 2 words have extreme change_graded values in the gold data
+                        "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                        # "evaluation/plotter": "none",
+                    }
+                ))
+                
+        score2, predictions2 = run(*instantiate(config))
+        # Assert that the result reproduces across runs
+        print(score2)
+        assert score2 > 0.0
+        assert score1 != score2        
+        
+    def test_bert_wic_eng_simple_plane_afternoon_similarity(self) -> None:
+        
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        # "task/wic/dm_ckpt@task.model.ckpt": "WIC_DWUG+XLWSD",
+                        "task/wic@task.model": "contextual_embedder",
+                        "task.model.ckpt": "bert-base-cased",
+                        "dataset": "testwug_en_111",
+                        "task/wic/metric@task.model.similarity_metric": "cosine",                 
+                        "dataset/split": "dev",
+                        "dataset/spelling_normalization": "english",
+                        "dataset/preprocessing": "raw",
+                        # These 2 words have extreme change_graded values in the gold data
+                        "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                        # "evaluation/plotter": "none",
+                    }
+                ))
+
+        # Run 1st time
+        score1, predictions1 = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        print(score1)
+        #print(predictions1)
+        assert score1 > 0.0
+        
+        # Run 2nd time
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        # "task/wic/dm_ckpt@task.model.ckpt": "WIC_DWUG+XLWSD",
+                        "task/wic@task.model": "contextual_embedder",
+                        "task.model.ckpt": "bert-base-cased",
+                        "dataset": "testwug_en_111",
+                        "task/wic/metric@task.model.similarity_metric": "manhattan",                 
+                        "dataset/split": "dev",
+                        "dataset/spelling_normalization": "english",
+                        "dataset/preprocessing": "raw",
+                        # These 2 words have extreme change_graded values in the gold data
+                        "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                        # "evaluation/plotter": "none",
+                    }
+                ))
+                
+        score2, predictions2 = run(*instantiate(config))
+        # Assert that the result reproduces across runs
+        print(score2)
+        assert score1 != score2            
+        
+    def test_bert_wic_eng_simple_plane_afternoon_model(self) -> None:
+        
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        # "task/wic/dm_ckpt@task.model.ckpt": "WIC_DWUG+XLWSD",
+                        "task/wic@task.model": "contextual_embedder",
+                        "task.model.ckpt": "bert-base-cased",
+                        "dataset": "testwug_en_111",
+                        "task/wic/metric@task.model.similarity_metric": "cosine",                 
+                        "dataset/split": "dev",
+                        "dataset/spelling_normalization": "english",
+                        "dataset/preprocessing": "raw",
+                        # These 2 words have extreme change_graded values in the gold data
+                        "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                        # "evaluation/plotter": "none",
+                    }
+                ))
+
+        # Run 1st time
+        score1, predictions1 = run(*instantiate(config))
+        # Assert that prediction corresponds to gold
+        print(score1)
+        #print(predictions1)
+        assert score1 > 0.0
+        
+        # Run 2nd time
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        # "task/wic/dm_ckpt@task.model.ckpt": "WIC_DWUG+XLWSD",
+                        "task/wic@task.model": "contextual_embedder",
+                        "task.model.ckpt": "pierluigic/xl-lexeme",
+                        "dataset": "testwug_en_111",
+                        "task/wic/metric@task.model.similarity_metric": "cosine",                 
+                        "dataset/split": "dev",
+                        "dataset/spelling_normalization": "english",
+                        "dataset/preprocessing": "raw",
+                        # These 2 words have extreme change_graded values in the gold data
+                        "dataset.test_on": ["afternoon_nn", "plane_nn"],
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                        # "evaluation/plotter": "none",
+                    }
+                ))
+                
+        score2, predictions2 = run(*instantiate(config))
+        # Assert that the result reproduces across runs
+        print(score2)
+        assert score1 != score2              
 
 if __name__ == '__main__':
     

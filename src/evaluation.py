@@ -46,8 +46,9 @@ class Evaluation(BaseModel, ABC):
 
         y_true = results.label.tolist()
         y_pred = results.prediction.tolist()
+        #print(y_true)
         
-        assert not np.isnan(y_true).any()
+        #assert not np.isnan(y_true).any() # there can be nan e.g. for 0-judgments in WiC evaluation
         assert not np.isnan(y_pred).any()
         
         results.to_csv("predictions.csv", sep="\t")

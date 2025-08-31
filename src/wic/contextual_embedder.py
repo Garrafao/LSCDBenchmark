@@ -162,6 +162,8 @@ class EmbeddingCache(BaseModel):
         index = self._index.assign(**missing_cols_in_index)
         df = index.merge(right=query)
 
+        #print(self._index.to_string())
+
         assert len(df) < 2
 
         if df.empty:
@@ -228,6 +230,11 @@ class EmbeddingCache(BaseModel):
                 self._index.to_parquet(path=self._index_path, engine="pyarrow")
                 log.info("Logged record of new embedding file")
 
+                #print(self._index)           
+                #print(self._index.to_string())
+                #print(self._cache[target])
+                #print(self._index_dir / f"{identifier}.pkl").blah
+                
                 with open(file=self._index_dir / f"{identifier}.pkl", mode="wb") as f:
                     torch.save(self._cache[target], f)
                     log.info(f"Saved embeddings to disk as {identifier}.pkl")
@@ -373,6 +380,7 @@ class ContextualEmbedder(WICModel):
 
     def encode(self, use: Use, d_type: Type[T] = np.ndarray) -> T:
         embedding = None if self.embedding_cache is None else self.embedding_cache.retrieve(use)
+        #embedding = None # for testing
         
         if embedding is None:
             if self.ckpt == "pierluigic/xl-lexeme" or self.ckpt == "sachinn1/xl-durel":
@@ -438,8 +446,8 @@ class ContextualEmbedder(WICModel):
                 log.info(f"Size of pre-subword-agregated tensor: {embedding.shape}")
 
             self._embeddings[use] = embedding
-            #if self.embedding_cache is not None:
-            #    self.embedding_cache.add_use(use=use, embedding=embedding)
+            if self.embedding_cache is not None:
+                self.embedding_cache.add_use(use=use, embedding=embedding)
         if len(embedding.shape) == 3:
             embedding = self.aggregate(embedding, layers=self.layers)
         if self.normalization is not None:
