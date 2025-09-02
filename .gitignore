@@ -642,5 +642,6 @@ lscd.csv - Sheet1 (1).csv
 runn1.sh
 wic_new_es
 
-
+utils.py
 plot.ipynb
+apd_compare_all.sh
