@@ -94,6 +94,7 @@ class WICModel(BaseModel, ABC):
         return query
 
     def _merge_cache(self, query: pd.DataFrame) -> pd.DataFrame:
+        print(self._cache)
         merged_df =  self._cache.merge(query, on=[col for col in query.columns if not col.startswith("prediction")], how="right", suffixes=('_cache', '_query'))
 
         # Choose non-null values from cache or query for prediction_x and prediction_y

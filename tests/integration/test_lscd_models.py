@@ -48,7 +48,37 @@ class TestLSCDModels(unittest.TestCase):
 
         # Run
         score, predictions = run(*instantiate(config))
+        
+    def test_apd_cosine_cut_change_graded_eng_simple_arm(self) -> None:
 
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "bert-base-cased",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut",
+                    "task.model.wic.similarity_metric.thresholds": [0.32535901204859474, 0.48300452735758276, 0.6115888591099456], # English thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "testwug_en_111",
+                    "dataset/split": "full",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    # has very few usages
+                    "dataset.test_on": ["arm"],
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+        
     def test_apd_sampled_change_graded_eng_simple_arm(self) -> None:
 
         # Compose hydra config
@@ -173,7 +203,235 @@ class TestLSCDModels(unittest.TestCase):
         score1, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score1
+        
+    def test_xllxm_apd_compare_ger_comedi_test(self) -> None:
 
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "pierluigic/xl-lexeme",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine",
+                    "dataset": "durel_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(-1.0) == score1        
+
+    def test_xldurel_apd_compare_ger_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine",
+                    "dataset": "durel_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(-0.7714285714285715) == score1        
+
+    def test_xldurel_apd_cosine_cut_compare_ger_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut",
+                    "task.model.wic.similarity_metric.thresholds": [0.32997490400345, 0.46455512615346295, 0.5999736878501423], # German thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "durel_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(-0.7714285714285715) == score1     
+        
+    def test_xldurel_jsddot_downsampled_cosine_cut_change_graded_eng_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "jsddot_all_downsampled",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut",
+                    "task.model.wic.similarity_metric.thresholds": [0.32535901204859474, 0.48300452735758276, 0.6115888591099456], # English thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "dwug_en_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(0.705170430668875) == score1    
+        
+    def test_xldurel_apd_cosine_cut_compare_rus_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut",
+                    "task.model.wic.similarity_metric.thresholds": [0.25539005328206443, 0.49066763335561997, 0.6147420218754426], # Russian thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "rusemshift_1_200",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(-0.9079538924922887) == score1        
+        
+    def test_xldurel_apd_cosine_cut_compare_rus2_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut",
+                    "task.model.wic.similarity_metric.thresholds": [0.25539005328206443, 0.49066763335561997, 0.6147420218754426], # Russian thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "rushifteval2_200",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(-0.7825013313896345) == score1                
+        
+    def test_xldurel_apd_cosine_cut_change_graded_eng_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut",
+                    "task.model.wic.similarity_metric.thresholds": [0.32535901204859474, 0.48300452735758276, 0.6115888591099456], # English thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "dwug_en_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(0.9240164263936982) == score1   
+        
+    def test_xldurel_apd_cosine_cut_scaled_compare_rus_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "task/wic/metric@task.model.wic.similarity_metric": "cosine_cut_scaled",
+                    "task.model.wic.similarity_metric.thresholds": [0.25539005328206443, 0.49066763335561997, 0.6147420218754426], # Russian thresholds
+                    "task.model.wic.similarity_metric.labels": [1, 2, 3, 4], # Can be omitted as specified as default in config
+                    "dataset": "rusemshift_1_200",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        score1, predictions = run(*instantiate(config))
+        print(score1)
+        assert pytest.approx(-0.9079538924922887) == score1        
+         
     def test_diasense_change_graded_eng_simple_arm(self) -> None:
 
         # Compose hydra config
@@ -337,7 +595,7 @@ class TestLSCDModels(unittest.TestCase):
         # Assert that prediction corresponds to gold
         assert 0.0 >= score
 
-     ## resampled data  english
+     ## resampled data english
     def test_apd_change_graded_eng_attack_edge(self) -> None:
         # Compose hydra config
         config = compose(
@@ -631,6 +889,35 @@ class TestLSCDModels(unittest.TestCase):
         score, predictions = run(*instantiate(config))
         # Assert that prediction corresponds to gold
         assert pytest.approx(1.0) == score
+        
+    def test_xldurel_jsdsoft_cosine_change_graded_eng_comedi_test(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.ckpt": "sachinn1/xl-durel",
+                    "task/lscd_graded@task.model": "jsdsoft_all",
+                    "task/wic@task.model.wic": "contextual_embedder",
+                    "dataset": "dwug_en_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "raw",
+                    "evaluation": "change_graded",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )
+
+        # Run
+        score, predictions = run(*instantiate(config))
+        print(score)
+        # Assert that prediction corresponds to gold
+        assert pytest.approx(0.6930123197952737) == score
+        
 
 if __name__ == "__main__":
 

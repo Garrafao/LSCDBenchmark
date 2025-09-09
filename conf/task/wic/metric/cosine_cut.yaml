@@ -1,0 +1,4 @@
+_target_: src.wrappers.cosine_similarity_cut
+thresholds: [0.32997490400345, 0.46455512615346295, 0.5999736878501423] # German thresholds as default
+labels: [1, 2, 3, 4] # DURel scale as default
+_partial_: true

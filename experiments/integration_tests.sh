@@ -2,6 +2,7 @@
 
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_ger_simple
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_eng_simple_arm
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_cosine_cut_change_graded_eng_simple_arm
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_sampled_change_graded_eng_simple_arm
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_eng_simple_plane_afternoon
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_downsampled_change_graded_eng_simple_plane_afternoon
@@ -11,13 +12,22 @@
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_cos_change_graded_eng_simple_arm
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_cos_change_graded_eng_simple_plane_afternoon
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_jsdsoft_change_graded_eng_simple_arm
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_jsdsoft_cosine_change_graded_eng_comedi_test
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_jsdsoft_change_graded_eng_simple_plane_afternoon
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xllxm_apd_compare_ger_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_apd_compare_ger_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_apd_cosine_cut_compare_ger_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_apd_cosine_cut_compare_rus_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_apd_cosine_cut_compare_rus2_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_apd_cosine_cut_change_graded_eng_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_jsddot_downsampled_cosine_cut_change_graded_eng_comedi_test
+#python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_xldurel_apd_cosine_cut_scaled_compare_rus_comedi_test
 #python tests/integration/test_lscd_models.py
 
 # Test cache
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_apd_change_graded_eng_simple_arm
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_apd_change_graded_ger
-python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_arm
+#python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_arm
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon_lemma
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_wic_eng_simple_plane_afternoon_similarity
