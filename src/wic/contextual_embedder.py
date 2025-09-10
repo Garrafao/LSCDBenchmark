@@ -21,7 +21,7 @@ from transformers import (
     PreTrainedTokenizerBase,
 )
 from transformers import logging as trans_logging
-from src.utils.tuncation import tokenize_truncate_decode
+from src.utils.truncation import tokenize_truncate_decode
 
 
 
