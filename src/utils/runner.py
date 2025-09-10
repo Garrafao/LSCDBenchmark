@@ -80,7 +80,7 @@ def instantiate(
     if config.get("evaluation") is not None:
         # after instantiation, could it still be None?
         evaluation = utils.instantiate(config.evaluation, _convert_="all")
-
+        
     return dataset, model, evaluation
 
 

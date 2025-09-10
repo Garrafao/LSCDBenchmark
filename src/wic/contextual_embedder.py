@@ -138,7 +138,7 @@ class EmbeddingCache(BaseModel):
         return self._cache[use.target].get(use.identifier)  # this can still be None
 
     def load(self, target: str) -> dict[UseID, torch.Tensor] | None:
-        """Load tha data of the target, its identifier and its embedding. 
+        """Load the data of the target, its identifier and its embedding. 
 
         :param target: the target term
         :type target: str

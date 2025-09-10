@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 import logging
 from tqdm import tqdm
 from functools import partial
@@ -45,7 +47,6 @@ class APD(GradedLSCDModel):
         self.wic.predictions = dict(zip(id_pairs, self.wic.predict_all(use_pairs=use_pairs)))
         logger.info("[APD] Running per-lemma prediction")
         return [self.predict(lemma) for lemma in tqdm(lemmas, desc="Processing lemmas")]
-
 
 class DiaSense(GradedLSCDModel):
     wic: wic.WICModel
