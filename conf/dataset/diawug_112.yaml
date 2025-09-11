@@ -14,7 +14,7 @@ wic_use_pairs:
   group: ALL
   sample: annotated
 
-path: diawug_110
+path: diawug_112
 standard_split:
   dev: []
   full:
@@ -48,4 +48,4 @@ standard_split:
   dev2: []
 test_on: null
 type: test
-url: https://zenodo.org/record/5791193/files/diawug.zip
+url: https://zenodo.org/records/14891461/files/diawug.zip

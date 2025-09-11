@@ -363,7 +363,7 @@ done
 
 for dataset in durel_300 surel_300; do
   CUDA_VISIBLE_DEVICES=3 python main.py \
-    dataset=$dataset \
+    dataset=durel_300 \
     dataset/spelling_normalization=none \
     dataset/preprocessing=raw \
     dataset/split=full \
