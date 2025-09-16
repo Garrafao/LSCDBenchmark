@@ -12,7 +12,7 @@ Lexical Semantic Change Detection (LSCD) is a field of NLP that studies methods 
 To get started, make sure that you have **Python `3.10.0`**. After that, clone the repository, then create a new virtual environment:
 
 ```sh
-conda create -n lscdb python=3.10 pytorch=2.7.0 hydra-core=1.2.0 pydantic=1.10.2 tqdm=4.64.1 pandas=1.5.0 GitPython=3.1.31 gdown=5.2.0 pandera=0.12.0 matplotlib=3.6.0 transformers=4.54.1 sentence-transformers=5.0.0 more-itertools=8.14.0 pytest=7.3.1 -c pytorch -c conda-forge -y 
+conda create -n lscdb python=3.10 pytorch=2.7.0 hydra-core=1.2.0 pydantic=1.10.2 tqdm=4.64.1 pandas=1.5.0 GitPython=3.1.31 gdown=5.2.0 pandera=0.12.0 matplotlib=3.6.0 transformers=4.54.1 sentencepiece=0.1.97 sentence-transformers=5.0.0 more-itertools=8.14.0 pytest=7.3.1 -c pytorch -c conda-forge -y 
 conda activate lscdb
 pip install chinese-whispers==0.8.0
 pip install git+https://github.com/nvanva/deepmistake@v3.0.0-alpha

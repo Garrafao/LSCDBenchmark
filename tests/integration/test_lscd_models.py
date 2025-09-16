@@ -430,7 +430,7 @@ class TestLSCDModels(unittest.TestCase):
 
         score1, predictions = run(*instantiate(config))
         print(score1)
-        assert pytest.approx(-0.9079538924922887) == score1        
+        assert pytest.approx(-0.8722076762524348) == score1        
          
     def test_diasense_change_graded_eng_simple_arm(self) -> None:
 

@@ -41,5 +41,19 @@ embedding_cache:
     contextual_embedder:
       pre_target_tokens: ${....truncation_tokens_before_target}
       ckpt: ${....ckpt}
+      
+prediction_cache:      
+  _target_: src.wic.model.PredictionCache
+  is_active: false
+  path_prefix: bert
+  metadata:
+    dataset:
+      name: ${dataset.name}
+      preprocessing: ${dataset.preprocessing.name}
+      spelling_normalization: ${dataset.spelling_normalization}
+    contextual_embedder:
+      pre_target_tokens: ${....truncation_tokens_before_target}
+      ckpt: ${....ckpt}
+      similarity_metric: ${....similarity_metric}
 
 

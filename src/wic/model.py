@@ -27,10 +27,86 @@ class NumpyEncoder(json.JSONEncoder):
         if isinstance(obj, (np.ndarray, np.integer, np.floating)):
             return obj.item()
         return super().default(obj)
+        
+class PredictionCache(BaseModel):
+    is_active: bool
+    path_prefix: str
+    metadata: dict[Any, Any]        
+    _cache: pd.DataFrame = PrivateAttr(default=None)
+    _cache_path: Path = PrivateAttr(default=None)
+    def __init__(self, **data):
+        super().__init__(**data)
+        self._cache_path = utils.path(".wic/"+self.path_prefix) / "predictions.parquet"
+        
+        if self.is_active:
+            try:
+                self._cache = pd.read_parquet(self._cache_path)
+            except FileNotFoundError:
+                self._initialize_empty_cache()
+        else:
+            self._initialize_empty_cache()
+
+    def _initialize_empty_cache(self):
+        self._cache = pd.json_normalize(self.metadata).assign(id=None, target=None) # parallel solution to embedding cache
+        try:
+            self._cache['contextual_embedder.similarity_metric'] = self._cache['contextual_embedder.similarity_metric'].astype(str) # to avoid problems in conversion
+        except KeyError:
+            pass
+        self._cache = self._cache.assign(use_0=None, use_1=None, prediction=None)
+    
+    def _prepare_query(self, left: list[str], right: list[str]) -> pd.DataFrame:
+        query = pd.json_normalize(self.metadata).assign(id=None, target=None)
+        try:
+            query['contextual_embedder.similarity_metric'] = query['contextual_embedder.similarity_metric'].astype(str) # to avoid problems in conversion
+        except KeyError:
+            pass
+        query = query.loc[query.index.repeat(len(left))]
+        query = query.assign(use_0=left, use_1=right)
+        return query
+
+    def _merge_cache(self, query: pd.DataFrame) -> pd.DataFrame:
+        assert not self._cache.duplicated().any()
+        merged_df = self._cache.merge(query, how="right")
+        assert not merged_df.duplicated(subset=['use_0', 'use_1']).any()
+        return merged_df
+    
+    def _update_cache(self, non_cached: pd.DataFrame, new_predictions: list[float]) -> None:
+
+        print(non_cached)
+        for i, _ in non_cached.iterrows():
+            non_cached.at[i, "prediction"] = new_predictions[i]
+        print(new_predictions)
+        print(non_cached)
+        
+        self._cache = pd.concat([self._cache, non_cached], ignore_index=True)
+        assert not self._cache.duplicated().any()
+
+    def _save_cache(self) -> None:
+        self._cache_path.parent.mkdir(parents=True, exist_ok=True)
+        self._cache.to_parquet(self._cache_path, index=False)
+
+    def _get_non_cached(self, df: pd.DataFrame) -> pd.DataFrame:
+        non_cached = df[df["prediction"].isna()].copy(deep=True).reset_index(drop=True)
+        return non_cached
+
+    def _filter_new_use_pairs(self, use_pairs: list[tuple[Use, Use]], non_cached: pd.DataFrame) -> list[tuple[Use, Use]]:
+        new_left = list(non_cached["use_0"])
+        new_right = list(non_cached["use_1"])
+        new_use_pairs = [(use_0, use_1) for use_0, use_1 in use_pairs if use_0.identifier in new_left and use_1.identifier in new_right]
+        return new_use_pairs        
+
+    def _combine_predictions(self, non_cached: pd.DataFrame, new_predictions: list[float], merged_df: pd.DataFrame) -> dict:
+        new_use_pair_ids = list(zip(list(non_cached["use_0"]), list(non_cached["use_1"])))
+        cached = merged_df[~merged_df["prediction"].isna()].copy(deep=True).reset_index()
+        old_use_pair_ids = list(zip(list(cached["use_0"]), list(cached["use_1"])))
+
+        full_predictions = dict(zip(new_use_pair_ids, new_predictions))
+        full_predictions.update(dict(zip(old_use_pair_ids, cached.prediction)))
+        return full_predictions
+        
 
 class WICModel(BaseModel, ABC):
-    _cache: pd.DataFrame = PrivateAttr(default=None)
-    _cache_path: Path = PrivateAttr(default_factory=lambda: utils.path(".wic") / "predictions.parquet")
+    prediction_cache: PredictionCache | None = Field(...) # contains currently only metadata, needs to be merged with external cache
     class Config:
         json_encoders = {
             functools.partial: lambda f: f.func.__name__,
@@ -45,15 +121,7 @@ class WICModel(BaseModel, ABC):
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
-        try:
-            self._cache = pd.read_parquet(self._cache_path)
-        except FileNotFoundError:
-            self._cache = self.as_df()
-            self._cache = self._cache.assign(use_0=None, use_1=None, prediction=None)
-            self._cache = self._cache.iloc[0:0]
             
-        #print(self._cache).Blah
-
     @abstractmethod
     def as_df(self) -> DataFrame:
         ...
@@ -63,20 +131,26 @@ class WICModel(BaseModel, ABC):
         ...
 
     def predict_all(self, use_pairs: list[tuple[Use, Use]]) -> list[float]:
+            
         left, right = self._prepare_use_identifiers(use_pairs)
-        query = self._prepare_query(left, right)
-        merged_df = self._merge_cache(query)
+                
+        # cache will be initialized empty internally if not activated
+        query = self.prediction_cache._prepare_query(left, right)
+        merged_df = self.prediction_cache._merge_cache(query)
         
-        non_cached = self._get_non_cached(merged_df)
-        new_use_pairs = self._filter_new_use_pairs(use_pairs, non_cached)
+        non_cached = self.prediction_cache._get_non_cached(merged_df)
+        new_use_pairs = self.prediction_cache._filter_new_use_pairs(use_pairs, non_cached)
 
         new_predictions = self.predict(use_pairs=new_use_pairs)
         if self.scaler is not None:
             new_predictions = self._scale_predictions(new_predictions)
         
-        full_predictions = self._combine_predictions(non_cached, new_predictions, merged_df)
-        self._update_cache(non_cached, new_predictions)
-        #self._save_cache() # temporarily disabled
+        full_predictions = self.prediction_cache._combine_predictions(non_cached, new_predictions, merged_df)
+
+        # store cache only if activated
+        if self.prediction_cache.is_active:
+            self.prediction_cache._update_cache(non_cached, new_predictions)
+            self.prediction_cache._save_cache()
        
         return list(full_predictions.values())
 
@@ -85,48 +159,6 @@ class WICModel(BaseModel, ABC):
         right = [use_1.identifier for _, use_1 in use_pairs]
         return left, right
 
-    def _prepare_query(self, left: list[str], right: list[str]) -> pd.DataFrame:
-        query = self.as_df()
-        query = query.loc[query.index.repeat(len(left))]
-        query = query.assign(use_0=left, use_1=right)
-        query = query.assign(**{col: None for col in self._cache.columns if col not in query.columns}).astype({col: self._cache[col].dtype for col in self._cache.columns if col not in query.columns})
-        self._cache = self._cache.assign(**{col: None for col in query.columns if col not in self._cache.columns}).astype({col: query[col].dtype for col in query.columns if col not in self._cache.columns})
-        return query
-
-    def _merge_cache(self, query: pd.DataFrame) -> pd.DataFrame:
-        print(self._cache)
-        merged_df =  self._cache.merge(query, on=[col for col in query.columns if not col.startswith("prediction")], how="right", suffixes=('_cache', '_query'))
-
-        # Choose non-null values from cache or query for prediction_x and prediction_y
-        merged_df['prediction'] = merged_df['prediction_cache'].combine_first(merged_df['prediction_query'])
-
-        merged_df.drop(columns=['prediction_cache', 'prediction_query'], inplace=True)
-
-        return merged_df
-    
-    def _update_cache(self, non_cached: pd.DataFrame, new_predictions: list[float]) -> None:
-        for i, _ in non_cached.iterrows():
-            non_cached.at[i, "prediction"] = new_predictions[i]
-        
-        self._cache = pd.concat([self._cache, non_cached], ignore_index=True)
-        main_cols = ["use_0", "use_1", "prediction"]
-        extra_cols = [col for col in self._cache.columns if col not in main_cols]
-        self._cache = self._cache[["use_0", "use_1", "prediction", *extra_cols]]
-
-    def _save_cache(self) -> None:
-        self._cache_path.parent.mkdir(parents=True, exist_ok=True)
-        self._cache.to_parquet(self._cache_path, index=False)
-
-    def _get_non_cached(self, df: pd.DataFrame) -> pd.DataFrame:
-        non_cached = df[df["prediction"].isna()].copy(deep=True).reset_index(drop=True)
-        return non_cached
-
-    def _filter_new_use_pairs(self, use_pairs: list[tuple[Use, Use]], non_cached: pd.DataFrame) -> list[tuple[Use, Use]]:
-        new_left = list(non_cached["use_0"])
-        new_right = list(non_cached["use_1"])
-        new_use_pairs = [(use_0, use_1) for use_0, use_1 in use_pairs if use_0.identifier in new_left and use_1.identifier in new_right]
-        return new_use_pairs
-
     def _scale_predictions(self, new_predictions: list[float]) -> list[float]:
         new_predictions = np.array(new_predictions).reshape(-1, 1)
         new_predictions = self.scaler.fit_transform(new_predictions).flatten().tolist()
@@ -134,12 +166,3 @@ class WICModel(BaseModel, ABC):
             as_json = json.dumps(self.scaler.__dict__, cls=NumpyEncoder, indent=4)
             f.write(as_json)
         return new_predictions
-
-    def _combine_predictions(self, non_cached: pd.DataFrame, new_predictions: list[float], merged_df: pd.DataFrame) -> dict:
-        new_use_pair_ids = list(zip(list(non_cached["use_0"]), list(non_cached["use_1"])))
-        cached = merged_df[~merged_df["prediction"].isna()].copy(deep=True).reset_index()
-        old_use_pair_ids = list(zip(list(cached["use_0"]), list(cached["use_1"])))
-
-        full_predictions = dict(zip(new_use_pair_ids, new_predictions))
-        full_predictions.update(dict(zip(old_use_pair_ids, cached.prediction)))
-        return full_predictions

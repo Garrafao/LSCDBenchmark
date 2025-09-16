@@ -2,3 +2,15 @@ defaults:
   - dm_ckpt@ckpt: ???
   
 _target_: src.wic.DM.DMWrapperClass
+prediction_cache:      
+  _target_: src.wic.model.PredictionCache
+  is_active: true
+  path_prefix: dm
+  metadata:
+    dataset:
+      name: ${dataset.name}
+      preprocessing: ${dataset.preprocessing.name}
+      spelling_normalization: ${dataset.spelling_normalization}
+    deepmistake:
+      ckpt: ${....ckpt.name}
+

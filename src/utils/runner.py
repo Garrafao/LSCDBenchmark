@@ -81,6 +81,8 @@ def instantiate(
         # after instantiation, could it still be None?
         evaluation = utils.instantiate(config.evaluation, _convert_="all")
         
+    #print(model).blah # for debugging
+        
     return dataset, model, evaluation
 
 
