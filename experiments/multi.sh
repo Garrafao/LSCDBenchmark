@@ -14,10 +14,10 @@
 #   evaluation=compare
 
 
-CUDA_VISIBLE_DEVICES=0 python main.py \
+CUDA_VISIBLE_DEVICES=0 python main.py -m\
   dataset=dwug_de_300 \
   dataset/spelling_normalization=none \
-  dataset/preprocessing= toklem,raw,tokenization,normalization,lemmatization \
+  dataset/preprocessing=toklem,raw,tokenization,normalization,lemmatization \
   dataset/split=comedi_test \
   task=lscd_graded \
   task/lscd_graded@task.model=apd_compare_all \
