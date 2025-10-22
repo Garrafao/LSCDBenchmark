@@ -311,6 +311,7 @@ class Dataset(BaseModel):
         )
        
         assert not judgments['i1_i2_pair'].duplicated().any()
+        #print('len(judgments)', len(judgments))
         
         return {
             (row['i1_i2_pair'][0], row['i1_i2_pair'][1]): row['judgment']
@@ -332,54 +333,15 @@ class Dataset(BaseModel):
         return dict(zip(clusters.identifier, clusters.cluster))
 
     def use_pairs(self, group: Group, sample: Sample) -> list[tuple[Use, Use]]:
-        index_path = utils.path(".use_pairs") / "index.parquet"
-        try:
-            index = pd.read_parquet(index_path)
-        except FileNotFoundError:
-            index = pd.DataFrame(columns=["dataset", "split", "id", "group", "sample"])
 
-        query = pd.DataFrame([{"dataset": self.name, "split": self.split, "group": group, "sample": sample}])
-        df = index.merge(query)
-
-
-        if df.empty or self.test_on is not None:
-            use_pairs = [
+        use_pairs = [
                 use_pair 
                 for lemma in tqdm(self.filter_lemmas(self.lemmas), desc="Retrieving each lemma's use pairs", leave=False)
                 for use_pair in lemma.use_pairs(group=group, sample=sample)
             ]
-            if self.test_on is None:
-                while True:
-                    identifier = str(uuid.uuid4())
-                    if identifier not in index.id.tolist():
-                        index_path.parent.mkdir(exist_ok=True, parents=True)
-                        index = pd.concat(
-                            [
-                                index,
-                                pd.DataFrame([{
-                                    "dataset": self.name,
-                                    "split": self.split,
-                                    "id": identifier,
-                                    "group": group,
-                                    "sample": sample
-                                }])
-                            ],
-                            ignore_index=True,
-                        )
-                        index.to_parquet(index_path, index=False)
-                        with open(file=index_path.parent / f"{identifier}.pkl", mode="wb") as f:
-                            pickle.dump(use_pairs, f)
 
-                        break
-        else:
-            id = df.id.iloc[0]
-            with open(file=index_path.parent / f"{id}.pkl", mode="rb") as f:
-                use_pairs = pickle.load(f)
-        use_pairs = list(set(use_pairs))
-        return use_pairs
-
-
-        
+        assert len(use_pairs) == len(set(use_pairs)) # we could additionally assert that switched pairs don't exist   
+        return use_pairs        
 
     def get_labels(self, evaluation_task: EvaluationTask) -> dict[Any, Any]:
         # the get_*_labels methods return dictionaries from targets, identifiers or tuples of identifiers to labels

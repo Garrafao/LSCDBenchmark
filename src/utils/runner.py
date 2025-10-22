@@ -113,6 +113,8 @@ def run(
                 return None
 
             use_pairs = dataset.use_pairs(group=group, sample=sample)
+            #print('group, sample', group, sample)
+            #print('len(use_pairs)', len(use_pairs))
             id_pairs = [(use_0.identifier, use_1.identifier) for use_0, use_1 in use_pairs]
             predictions.update(dict(zip(id_pairs, model.predict_all(use_pairs))))
 
@@ -141,14 +143,8 @@ def run(
             }
         )
 
-        first_key = list(predictions.keys())[0]
-        if isinstance(first_key, (tuple, list, set)):
-            new_cols = predictions_df.instance.apply(Series)
-            new_cols.columns = [f"instance_{i}" for i in range(len(new_cols.columns))]  # type: ignore
-            predictions_df.drop(columns=["instance"], inplace=True)
-            predictions_df = pd.concat([new_cols, predictions_df], axis=1)
         predictions_df.to_csv(
-            path_or_buf="predictions.csv", sep="\t", quoting=csv.QUOTE_NONE
+            path_or_buf="predictions.csv", sep="\t", quoting=csv.QUOTE_NONE # this is overwritten in evaluation(), assures predictions are always exported
         )
 
         if evaluation is not None:

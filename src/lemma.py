@@ -127,6 +127,8 @@ class Lemma(BaseModel):
             self._annotated_pairs_df['identifier2'] = self._annotated_pairs_df['identifier2'].astype(str)
             self._annotated_pairs_df[['identifier1','identifier2']] = np.sort(self._annotated_pairs_df[['identifier1','identifier2']], axis=1) # sort within pairs to find duplicates  
             self._annotated_pairs_df = self._annotated_pairs_df.drop_duplicates()         
+            assert not self._annotated_pairs_df[['identifier1','identifier2']].duplicated().any()
+            print('len(self._annotated_pairs_df)', len(self._annotated_pairs_df))
             self._annotated_pairs_df = self.annotated_pairs_schema.validate(self._annotated_pairs_df)
         return self._annotated_pairs_df
 

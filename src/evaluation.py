@@ -80,24 +80,21 @@ class Evaluation(BaseModel, ABC):
                 "prediction": list(predictions.values()),
             }
         )
+
+        assert set(labels_df["instance"].tolist()) >= set(predictions_df["instance"].tolist()) # note that there can be more labels than predictions as labels are generated for the full dataset while use pairs are generated per lemma excluding those not in the split or not used for test_on
+        
         merged = pd.merge(
             left=labels_df,
             right=predictions_df,
-            how="right",
+            how="right", # get all labels for existing predictions
             on="instance",
             validate="one_to_one",
         )
         
         assert len(predictions_df) == len(merged)
 
-        first_key = list(labels.keys())[0] # unclear what this code is doing, validate
-        if isinstance(first_key, (tuple, list, set)):
-            new_cols = merged.instance.apply(pd.Series)
-            new_cols.columns = [f"instance_{i}" for i in range(len(new_cols.columns))]  # type: ignore
-            merged.drop(columns=["instance"], inplace=True) 
-            merged = pd.concat([new_cols, merged], axis=1)
-            merged = merged[list(new_cols.columns) + ["prediction", "label"]]
-        else:
-            merged = merged[["instance", "prediction", "label"]]
+        merged = merged[["instance", "prediction", "label"]]
+        
+        assert predictions_df[["instance", "prediction"]].to_dict() == merged[["instance", "prediction"]].to_dict()
 
         return merged

@@ -42,12 +42,15 @@
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_pred_wic_eng_simple_plane_afternoon_similarity
 #python -m unittest tests.integration.test_cache.TestCache.test_bert_pred_wic_eng_simple_plane_afternoon_model
 # deep mistake with prediction cache
-python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_apd_change_graded_eng_simple_arm
-python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_apd_change_graded_ger
-python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_arm
-python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_plane_afternoon
-python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_plane_afternoon_lemma
-python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_plane_afternoon_model
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_apd_change_graded_eng_simple_arm
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_apd_change_graded_ger
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_apd_compare_ger_durel_comedi_norm
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_arm
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_plane_afternoon
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_plane_afternoon_lemma
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_eng_simple_plane_afternoon_model
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_ger_durel_comedi
+#python -m unittest tests.integration.test_cache.TestCache.test_dm_pred_wic_sv_dwug_sv_res_comedi
 
 # Spanish integration tests
 #python -m unittest tests.integration.test_lscd_models.TestLSCDModels.test_apd_change_graded_es_simple_actitud

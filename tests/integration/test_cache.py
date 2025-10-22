@@ -667,6 +667,32 @@ class TestCache(unittest.TestCase):
         # Assert that the result reproduces across runs
         assert predictions1 == predictions2
 
+    def test_dm_pred_apd_compare_ger_durel_comedi_norm(self) -> None:
+
+        # Compose hydra config
+        config = compose(
+            config_name="config",
+            return_hydra_config=True,
+            overrides=overrides(
+                {
+                    "task": "lscd_graded",
+                    "task.model.wic.prediction_cache.is_active": "true", # is deactivated for contextual_embedder by default
+                    "task/lscd_graded@task.model": "apd_compare_all",
+                    "task/wic@task.model.wic": "deepmistake",
+                    "task/wic/dm_ckpt@task.model.wic.ckpt": "MCLen",
+                    "dataset": "durel_300",
+                    "dataset/split": "comedi_test",
+                    "dataset/spelling_normalization": "none",
+                    "dataset/preprocessing": "normalization",
+                    "evaluation": "compare",
+                    "evaluation/plotter": "none",
+                }
+            ),
+        )        
+
+        score, predictions = run(*instantiate(config))
+        print(score)
+        assert pytest.approx(-0.8857142857142858) == score
 
     def test_dm_pred_apd_change_graded_ger(self) -> None:
 
@@ -871,7 +897,54 @@ class TestCache(unittest.TestCase):
         # Assert that the result reproduces across runs
         print(score2)
         assert score1 != score2          
+                
+    def test_dm_pred_wic_ger_durel_comedi(self) -> None:
         
+        # Run 2nd time
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        "task/wic@task.model": "deepmistake",
+                        "task/wic/dm_ckpt@task.model.ckpt": "MCLen",
+                        "task.model.prediction_cache.is_active": "true", # is deactivated for contextual_embedder by default
+                        "dataset": "durel_300",
+                        "dataset/split": "comedi_test",
+                        "dataset/spelling_normalization": "none",
+                        "dataset/preprocessing": "raw",
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                    }
+                ))
+                
+        score, predictions = run(*instantiate(config))
+        # Assert that the result reproduces across runs
+        print(score)
+        assert pytest.approx(0.6539862126518785) == score
+
+    def test_dm_pred_wic_sv_dwug_sv_res_comedi(self) -> None:
+        
+        # Run 2nd time
+        # Compose hydra config
+        config = compose(config_name="config", return_hydra_config=True, overrides=overrides(
+                    {
+                        "task": "wic",
+                        "task/wic@task.model": "deepmistake",
+                        "task/wic/dm_ckpt@task.model.ckpt": "MCLen",
+                        "task.model.prediction_cache.is_active": "true", # is deactivated for contextual_embedder by default
+                        "dataset": "dwug_sv_resampled_100",
+                        "dataset/split": "comedi_test",
+                        "dataset/spelling_normalization": "none",
+                        "dataset/preprocessing": "raw",
+                        "evaluation": "wic",
+                        "evaluation/metric": "spearman",
+                    }
+                ))
+                
+        score, predictions = run(*instantiate(config))
+        print(score)
+        assert pytest.approx(0.6539862126518785) == score
+          
 
 if __name__ == '__main__':
     
