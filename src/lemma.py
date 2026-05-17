@@ -1,4 +1,6 @@
 import csv
+import logging
+import random
 from collections import defaultdict
 from itertools import product, combinations
 from pathlib import Path
@@ -265,10 +267,14 @@ class Lemma(BaseModel):
             case (sampled, p): # validate
                 assert isinstance(sampled, RandomSampling)
                 ids = self.uses_df
-                ids = ids.sample(n=sampled.n, replace=sampled.replace)
+                # ids = ids.sample(n=sampled.n, replace=sampled.replace)
                 self._uses_df = ids
                 ids1, ids2 = self.split_uses(p)
                 use_pairs = list(zip(ids1, ids2))
+                if not sampled.replace and len(use_pairs) < sampled.n:
+                    logging.warn(f'Cannot sample without replacement {sampled.n} pairs from {len(use_pairs)}, taking all pairs')
+                else:
+                    use_pairs = random.choices(use_pairs, k=sampled.n) if sampled.replace else random.sample(use_pairs, k=sampled.n)
 
         #print(use_pairs).b
         assert len(use_pairs) == len(set(use_pairs)) # we could additionally assert that switched pairs don't exist   
